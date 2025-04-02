@@ -5,7 +5,9 @@
     "@tsconfig/node-ts",
     "@tsconfig/strictest",
   ],
-  "include": ["src/**/*"],
+  "include": [
+    "src",
+  ],
   "compilerOptions": {
     "allowJs": false,
     "checkJs": false,
