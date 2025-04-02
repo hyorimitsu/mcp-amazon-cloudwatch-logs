@@ -17,7 +17,8 @@
     "inspector": "npx @modelcontextprotocol/inspector build/index.js",
     "showTsConfig": "tsc --showConfig",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write './**/*.{js,ts,json}'"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "0.6.0"
@@ -37,6 +38,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-unicorn": "^58.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "prettier": "^3.5.3",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.29.0"
   }
