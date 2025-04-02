@@ -3,16 +3,14 @@
     "@tsconfig/recommended",
     "@tsconfig/node22",
     "@tsconfig/node-ts",
-    "@tsconfig/strictest",
+    "@tsconfig/strictest"
   ],
-  "include": [
-    "src",
-  ],
+  "include": ["src"],
   "compilerOptions": {
     "allowJs": false,
     "checkJs": false,
     "removeComments": true,
     "rootDir": "./src",
-    "outDir": "./build",
-  },
+    "outDir": "./build"
+  }
 }
