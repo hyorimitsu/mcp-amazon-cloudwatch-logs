@@ -21,7 +21,10 @@
     "format": "prettier --write './**/*.{js,ts,json}'"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "0.6.0"
+    "@aws-sdk/client-cloudwatch-logs": "^3.782.0",
+    "@modelcontextprotocol/sdk": "0.6.0",
+    "zod": "^3.24.2",
+    "zod-to-json-schema": "^3.24.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
