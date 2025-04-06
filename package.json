@@ -14,7 +14,7 @@
     "build"
   ],
   "scripts": {
-    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "build": "tsc && shx chmod +x build/*.js",
     "prepare": "npm run build",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js",
@@ -45,6 +45,7 @@
     "eslint-plugin-unicorn": "^58.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.5.3",
+    "shx": "^0.4.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.29.0"
   }
