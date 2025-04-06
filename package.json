@@ -1,11 +1,14 @@
 {
-  "name": "app",
+  "name": "@hyorimitsu/amazon-cloudwatch-logs-mcp-server",
   "version": "0.1.0",
-  "description": "A Model Context Protocol server",
-  "private": true,
+  "description": "A Model Context Protocol (MCP) server that provides tools for interacting with Amazon CloudWatch Logs services. This server enables AI Agent to manage CloudWatch log through a standardized interface using AWS SDK.",
+  "license": "MIT",
+  "author": "Hiroki Yorimitsu (https://github.com/hyorimitsu)",
+  "homepage": "https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs",
+  "bugs": "https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs/issues",
   "type": "module",
   "bin": {
-    "app": "./build/index.js"
+    "amazon-cloudwatch-logs-mcp-server": "./build/index.js"
   },
   "files": [
     "build"
