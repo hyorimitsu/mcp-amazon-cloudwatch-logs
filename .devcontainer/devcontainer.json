@@ -9,7 +9,7 @@
   // "features": {},
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [5173, 3001],
+  "forwardPorts": [6274, 3001],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "yes | pnpm install",
