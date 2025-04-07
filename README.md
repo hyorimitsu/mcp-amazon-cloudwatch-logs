@@ -1,70 +1,124 @@
-# app MCP Server
+# Amazon CloudWatch Logs MCP Server
 
-A Model Context Protocol server
+A Model Context Protocol (MCP) server that provides tools for interacting with Amazon CloudWatch Logs services. This server enables AI assistant to manage CloudWatch logs through a standardized interface using AWS SDK.
 
-This is a TypeScript-based MCP server that implements a simple notes system. It demonstrates core MCP concepts by providing:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-- Resources representing text notes with URIs and metadata
-- Tools for creating new notes
-- Prompts for generating summaries of notes
+> **Note:** This project is currently under active development and not yet ready for production use. Features and APIs may change significantly before the first stable release.
 
-## Features
+## Overview
 
-### Resources
-- List and access notes via `note://` URIs
-- Each note has a title, content and metadata
-- Plain text mime type for simple content access
+This MCP server allows AI assistant to interact with Amazon CloudWatch Logs through the Model Context Protocol. It provides a standardized interface for performing various CloudWatch Logs operations, enabling comprehensive management and monitoring of log data.
 
-### Tools
-- `create_note` - Create new text notes
-  - Takes title and content as required parameters
-  - Stores note in server state
+## Setup
 
-### Prompts
-- `summarize_notes` - Generate a summary of all stored notes
-  - Includes all note contents as embedded resources
-  - Returns structured prompt for LLM summarization
+### Using Local Development Build
 
-## Development
-
-Install dependencies:
 ```bash
-npm install
+# Clone the repository
+git clone https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs.git
+cd mcp-amazon-cloud-watch-logs
+
+# Install dependencies
+pnpm install
+
+# Build the project
+pnpm run build
 ```
 
-Build the server:
-```bash
-npm run build
-```
+### Configuration
 
-For development with auto-rebuild:
-```bash
-npm run watch
-```
-
-## Installation
-
-To use with Claude Desktop, add the server config:
-
-On MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
+To use the MCP server, you need to configure it with your AWS credentials. You can do this by setting environment variables:
 
 ```json
 {
   "mcpServers": {
-    "app": {
-      "command": "/path/to/app/build/index.js"
+    "amazon-cloudwatch-logs": {
+      "command": "node",
+      "args": ["/path/to/mcp-amazon-cloud-watch-logs/build/index.js"],
+      "env": {
+        "AWS_REGION": "us-east-1",
+        "AWS_ACCESS_KEY_ID": "<YOUR_ACCESS_KEY>",
+        "AWS_SECRET_ACCESS_KEY": "<YOUR_SECRET_KEY>"
+      }
     }
   }
 }
 ```
 
-### Debugging
+> **Note:** In the future, this project will be published as an npm package and as a Docker image for easier installation and usage.
 
-Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector), which is available as a package script:
+## Available Tools
+
+| Tool Name        | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| create_log_group | Creates a new Amazon CloudWatch Logs log group |
+
+For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs/blob/main/TOOLS.md).
+
+> **Note:** This project is under development. Additional CloudWatch Logs operations are planned for future releases.
+
+## Development
+
+This project uses [VS Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) for development to ensure a consistent development environment across all contributors.
+
+### Prerequisites for Development
+
+- [Docker](https://www.docker.com/products/docker-desktop/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [VS Code Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+### Development Setup
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs.git
+   cd mcp-amazon-cloud-watch-logs
+   ```
+
+2. Open the project in VS Code:
+
+   ```bash
+   code .
+   ```
+
+3. When prompted, click "Reopen in Container" or use the command palette and select "Dev Containers: Reopen in Container".
+
+4. VS Code will build the dev container and open the project inside it. This may take a few minutes the first time.
+
+5. Once inside the container, the development environment is fully set up with all dependencies installed.
+
+### Development Commands
+
+All commands are run inside the dev container:
 
 ```bash
-npm run inspector
+# Build the project
+pnpm run build
+
+# Run linter
+pnpm run lint
+
+# Fix linting issues
+pnpm run lint:fix
+
+# Format code
+pnpm run format
+
+# Test with the MCP Inspector
+pnpm run inspector
 ```
 
-The Inspector will provide a URL to access debugging tools in your browser.
+## Extending the Server
+
+The server is designed to be easily extensible. To add a new CloudWatch Logs operation:
+
+1. Create a schema in `src/operations/schemas/`
+2. Implement the operation in `src/operations/`
+3. Add the tool definition to `src/handlers/tools/types.ts`
+4. Add the tool to the tools list in `src/handlers/tools/tools.ts`
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
