@@ -12,7 +12,11 @@ import { isToolName } from './types.ts'
 export const setRequestHandler = (server: Server) => {
   // Handler for listing available tools
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
-    tools: tools,
+    tools: Object.entries(tools).map(([key, item]) => ({
+      name: key,
+      description: item.description,
+      inputSchema: item.inputSchema,
+    })),
   }))
 
   // Handler for tool execution requests
