@@ -12,19 +12,37 @@ import { isToolName } from './types.ts'
 export const setRequestHandler = (server: Server) => {
   // Handler for listing available tools
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
-    tools: tools,
+    tools: Object.entries(tools).map(([key, item]) => ({
+      name: key,
+      description: item.description,
+      inputSchema: item.inputSchema,
+    })),
   }))
 
   // Handler for tool execution requests
   server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
     try {
       if (request.params.arguments === undefined) {
-        throw new Error('Tool execution failed: Arguments are required for this operation')
+        return {
+          content: [
+            {
+              type: 'text',
+              text: 'Tool execution failed: Arguments are required for this operation',
+            },
+          ],
+          isError: true,
+        }
       }
       if (!isToolName(request.params.name)) {
-        throw new Error(
-          `Tool execution failed: Unknown tool "${request.params.name}". Please use one of the available tools.`,
-        )
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Tool execution failed: Unknown tool "${request.params.name}". Please use one of the available tools.`,
+            },
+          ],
+          isError: true,
+        }
       }
 
       const tool = callTools[request.params.name]
@@ -33,20 +51,38 @@ export const setRequestHandler = (server: Server) => {
 
       return {
         content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
+        isError: false,
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorDetails = error.errors
           .map(err => `[${err.code}] ${err.path.join('.')}: ${err.message}`)
           .join('; ')
-        throw new Error(`Tool execution failed: Invalid input parameters. ${errorDetails}`)
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Tool execution failed: Invalid input parameters. ${errorDetails}`,
+            },
+          ],
+          isError: true,
+        }
       }
       if (error instanceof CloudWatchLogsServiceException) {
-        throw new Error(
-          `Tool execution failed: Amazon CloudWatch Logs service returned an error. ${error.name}: ${error.message}`,
-        )
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Tool execution failed: Amazon CloudWatch Logs service returned an error. ${error.name}: ${error.message}`,
+            },
+          ],
+          isError: true,
+        }
       }
-      throw error
+      return {
+        content: [{ type: 'text', text: `Tool execution failed: ${error}` }],
+        isError: true,
+      }
     }
   })
 }
