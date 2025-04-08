@@ -1,5 +1,6 @@
 import { type z } from 'zod'
 import type * as groupsSchema from '../../operations/schemas/groups.ts'
+import type * as streamsSchema from '../../operations/schemas/streams.ts'
 
 /**
  * Object containing all available tool names supported by this MCP server
@@ -10,6 +11,7 @@ export const ToolName = {
   CreateLogGroup: 'create_log_group',
   DescribeLogGroups: 'describe_log_groups',
   DeleteLogGroup: 'delete_log_group',
+  CreateLogStream: 'create_log_stream',
 } as const
 
 type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
@@ -33,6 +35,11 @@ type ToolConfigurations = {
     requestSchema: typeof groupsSchema.DeleteLogGroupRequestSchema
     requestType: z.infer<typeof groupsSchema.DeleteLogGroupRequestSchema>
     responseType: z.infer<typeof groupsSchema.DeleteLogGroupResponseSchema>
+  }
+  [ToolName.CreateLogStream]: {
+    requestSchema: typeof streamsSchema.CreateLogStreamRequestSchema
+    requestType: z.infer<typeof streamsSchema.CreateLogStreamRequestSchema>
+    responseType: z.infer<typeof streamsSchema.CreateLogStreamResponseSchema>
   }
 }
 
