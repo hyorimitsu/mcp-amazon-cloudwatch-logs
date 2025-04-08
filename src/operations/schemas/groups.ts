@@ -2,6 +2,8 @@ import {
   type CreateLogGroupCommandInput,
   type CreateLogGroupCommandOutput,
   DataProtectionStatus,
+  type DeleteLogGroupCommandInput,
+  type DeleteLogGroupCommandOutput,
   type DescribeLogGroupsCommandInput,
   type DescribeLogGroupsCommandOutput,
   InheritedProperty,
@@ -125,5 +127,21 @@ export const DescribeLogGroupsResponseSchema = typeSafeSchema<
       .optional()
       .describe('The log groups.'),
     nextToken: z.string().optional().describe('The token for the next set of items to return.'),
+  }),
+)
+
+export const DeleteLogGroupRequestSchema = typeSafeSchema<
+  OptionalToUndefined<DeleteLogGroupCommandInput>
+>()(
+  z.object({
+    logGroupName: z.string().describe('The name of the log group.'),
+  }),
+)
+
+export const DeleteLogGroupResponseSchema = typeSafeSchema<
+  OptionalToUndefined<DeleteLogGroupCommandOutput>
+>()(
+  z.object({
+    $metadata: MetadataSchema,
   }),
 )

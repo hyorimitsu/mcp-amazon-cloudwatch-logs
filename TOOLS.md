@@ -92,3 +92,34 @@ Response:
   "nextToken": "example-next-token"
 }
 ```
+
+### delete_log_group
+
+Delete an Amazon CloudWatch Logs log group.
+
+**Parameters:**
+
+- `logGroupName` (string, required): The name of the log group
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupName": "my-application-logs"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  }
+}
+```
