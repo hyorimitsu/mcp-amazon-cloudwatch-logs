@@ -13,6 +13,7 @@ export const ToolName = {
   DeleteLogGroup: 'delete_log_group',
   CreateLogStream: 'create_log_stream',
   DescribeLogStreams: 'describe_log_streams',
+  DeleteLogStream: 'delete_log_stream',
 } as const
 
 type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
@@ -46,6 +47,11 @@ type ToolConfigurations = {
     requestSchema: typeof streamsSchema.DescribeLogStreamsRequestSchema
     requestType: z.infer<typeof streamsSchema.DescribeLogStreamsRequestSchema>
     responseType: z.infer<typeof streamsSchema.DescribeLogStreamsResponseSchema>
+  }
+  [ToolName.DeleteLogStream]: {
+    requestSchema: typeof streamsSchema.DeleteLogStreamRequestSchema
+    requestType: z.infer<typeof streamsSchema.DeleteLogStreamRequestSchema>
+    responseType: z.infer<typeof streamsSchema.DeleteLogStreamResponseSchema>
   }
 }
 

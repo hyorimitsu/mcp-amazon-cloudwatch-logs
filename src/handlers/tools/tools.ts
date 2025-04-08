@@ -27,6 +27,10 @@ export const tools: ListToolDefinition = {
     description: 'List and describe log streams in an Amazon CloudWatch Logs log group',
     inputSchema: zodToJsonSchema(streamsSchema.DescribeLogStreamsRequestSchema),
   },
+  [ToolName.DeleteLogStream]: {
+    description: 'Delete a log stream in an Amazon CloudWatch Logs log group',
+    inputSchema: zodToJsonSchema(streamsSchema.DeleteLogStreamRequestSchema),
+  },
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for execution)
@@ -50,5 +54,9 @@ export const callTools: CallToolDefinition = {
   [ToolName.DescribeLogStreams]: {
     requestSchema: streamsSchema.DescribeLogStreamsRequestSchema,
     operationFn: streams.describeLogStreams,
+  },
+  [ToolName.DeleteLogStream]: {
+    requestSchema: streamsSchema.DeleteLogStreamRequestSchema,
+    operationFn: streams.deleteLogStream,
   },
 }

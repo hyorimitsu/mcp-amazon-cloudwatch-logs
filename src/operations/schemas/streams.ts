@@ -1,6 +1,8 @@
 import {
   type CreateLogStreamCommandInput,
   type CreateLogStreamCommandOutput,
+  type DeleteLogStreamCommandInput,
+  type DeleteLogStreamCommandOutput,
   type DescribeLogStreamsCommandInput,
   type DescribeLogStreamsCommandOutput,
   OrderBy,
@@ -91,5 +93,22 @@ export const DescribeLogStreamsResponseSchema = typeSafeSchema<
       .optional()
       .describe('The log streams.'),
     nextToken: z.string().optional().describe('The token for the next set of items to return.'),
+  }),
+)
+
+export const DeleteLogStreamRequestSchema = typeSafeSchema<
+  OptionalToUndefined<DeleteLogStreamCommandInput>
+>()(
+  z.object({
+    logGroupName: z.string().describe('The name of the log group.'),
+    logStreamName: z.string().describe('The name of the log stream.'),
+  }),
+)
+
+export const DeleteLogStreamResponseSchema = typeSafeSchema<
+  OptionalToUndefined<DeleteLogStreamCommandOutput>
+>()(
+  z.object({
+    $metadata: MetadataSchema,
   }),
 )
