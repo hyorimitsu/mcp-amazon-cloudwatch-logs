@@ -123,3 +123,121 @@ Response:
   }
 }
 ```
+
+### create_log_stream
+
+Create a new log stream in an Amazon CloudWatch Logs log group.
+
+**Parameters:**
+
+- `logGroupName` (string, required): The name of the log group
+- `logStreamName` (string, required): The name of the log stream
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupName": "my-application-logs",
+  "logStreamName": "instance-1234"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  }
+}
+```
+
+### describe_log_streams
+
+List and describe log streams in an Amazon CloudWatch Logs log group.
+
+**Parameters:**
+
+- `logGroupName` (string, optional): The name of the log group
+- `logGroupIdentifier` (string, optional): Specify either the name or ARN of the log group to view
+- `logStreamNamePrefix` (string, optional): The prefix to match
+- `orderBy` (string, optional): If the value is `LogStreamName`, the results are ordered by log stream name
+- `descending` (boolean, optional): If the value is true, results are returned in descending order
+- `nextToken` (string, optional): The token for the next set of items to return
+- `limit` (number, optional): The maximum number of items returned
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupName": "my-application-logs",
+  "logStreamNamePrefix": "instance-",
+  "limit": 10
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "logStreams": [
+    {
+      "logStreamName": "instance-1234",
+      "creationTime": 1617234567890,
+      "firstEventTimestamp": 1617234568000,
+      "lastEventTimestamp": 1617234569000,
+      "lastIngestionTime": 1617234570000,
+      "uploadSequenceToken": "example-sequence-token",
+      "arn": "arn:aws:logs:us-east-1:123456789012:log-group:my-application-logs:log-stream:instance-1234",
+      "storedBytes": 1024
+    }
+  ],
+  "nextToken": "example-next-token"
+}
+```
+
+### delete_log_stream
+
+Delete a log stream in an Amazon CloudWatch Logs log group.
+
+**Parameters:**
+
+- `logGroupName` (string, required): The name of the log group
+- `logStreamName` (string, required): The name of the log stream
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupName": "my-application-logs",
+  "logStreamName": "instance-1234"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  }
+}
+```
