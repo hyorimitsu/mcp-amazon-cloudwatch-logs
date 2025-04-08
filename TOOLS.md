@@ -123,3 +123,36 @@ Response:
   }
 }
 ```
+
+### create_log_stream
+
+Create a new log stream in an Amazon CloudWatch Logs log group.
+
+**Parameters:**
+
+- `logGroupName` (string, required): The name of the log group
+- `logStreamName` (string, required): The name of the log stream
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupName": "my-application-logs",
+  "logStreamName": "instance-1234"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  }
+}
+```
