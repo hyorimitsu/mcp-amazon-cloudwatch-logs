@@ -19,6 +19,8 @@ Creates a new Amazon CloudWatch Logs log group.
 
 **Example:**
 
+Request:
+
 ```json
 {
   "logGroupName": "my-application-logs",
@@ -29,15 +31,13 @@ Creates a new Amazon CloudWatch Logs log group.
 }
 ```
 
-**Response:**
+Response:
 
 ```json
 {
   "$metadata": {
     "httpStatusCode": 200,
     "requestId": "example-request-id",
-    "extendedRequestId": "example-extended-request-id",
-    "cfId": "example-cf-id",
     "attempts": 1,
     "totalRetryDelay": 0
   }
@@ -60,6 +60,8 @@ List and describe Amazon CloudWatch Logs log groups.
 
 **Example:**
 
+Request:
+
 ```json
 {
   "logGroupNamePrefix": "my-application",
@@ -67,15 +69,13 @@ List and describe Amazon CloudWatch Logs log groups.
 }
 ```
 
-**Response:**
+Response:
 
 ```json
 {
   "$metadata": {
     "httpStatusCode": 200,
     "requestId": "example-request-id",
-    "extendedRequestId": "example-extended-request-id",
-    "cfId": "example-cf-id",
     "attempts": 1,
     "totalRetryDelay": 0
   },
@@ -83,14 +83,10 @@ List and describe Amazon CloudWatch Logs log groups.
     {
       "logGroupName": "my-application-logs",
       "creationTime": 1617234567890,
-      "retentionInDays": 30,
       "metricFilterCount": 0,
-      "arn": "arn:aws:logs:us-east-1:123456789012:log-group:my-application-logs",
-      "storedBytes": 1234567,
-      "kmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/abcd1234-ab12-cd34-ef56-abcdef123456",
-      "dataProtectionStatus": "ACTIVATED",
-      "inheritedProperties": ["ACCOUNT_DATA_PROTECTION"],
-      "logGroupClass": "STANDARD"
+      "arn": "arn:aws:logs:us-east-1:123456789012:log-group:my-application-logs:*",
+      "logGroupClass": "STANDARD",
+      "logGroupArn": "arn:aws:logs:us-east-1:123456789012:log-group:my-application-logs"
     }
   ],
   "nextToken": "example-next-token"
