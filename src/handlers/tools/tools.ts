@@ -23,6 +23,10 @@ export const tools: ListToolDefinition = {
     description: 'Create a new log stream in an Amazon CloudWatch Logs log group',
     inputSchema: zodToJsonSchema(streamsSchema.CreateLogStreamRequestSchema),
   },
+  [ToolName.DescribeLogStreams]: {
+    description: 'List and describe log streams in an Amazon CloudWatch Logs log group',
+    inputSchema: zodToJsonSchema(streamsSchema.DescribeLogStreamsRequestSchema),
+  },
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for execution)
@@ -42,5 +46,9 @@ export const callTools: CallToolDefinition = {
   [ToolName.CreateLogStream]: {
     requestSchema: streamsSchema.CreateLogStreamRequestSchema,
     operationFn: streams.createLogStream,
+  },
+  [ToolName.DescribeLogStreams]: {
+    requestSchema: streamsSchema.DescribeLogStreamsRequestSchema,
+    operationFn: streams.describeLogStreams,
   },
 }
