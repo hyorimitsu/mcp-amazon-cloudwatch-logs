@@ -50,7 +50,7 @@ List and describe Amazon CloudWatch Logs log groups.
 
 **Parameters:**
 
-- `accoutIdentifiers` (array of strings, optional): When `includeLinkedAccounts` is set to `True`, use this parameter to specify the list of accounts to search
+- `accountIdentifiers` (array of strings, optional): When `includeLinkedAccounts` is set to `True`, use this parameter to specify the list of accounts to search
 - `logGroupNamePrefix` (string, optional): The prefix to match
 - `logGroupNamePattern` (string, optional): If you specify a string for this parameter, the operation returns only log groups that have names that match the string based on a case-sensitive substring search
 - `nextToken` (string, optional): The token for the next set of items to return

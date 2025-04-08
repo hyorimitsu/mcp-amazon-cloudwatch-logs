@@ -37,7 +37,7 @@ export const CreateLogGroupResponseSchema = typeSafeSchema<CreateLogGroupCommand
 
 export const DescribeLogGroupsRequestSchema = typeSafeSchema<DescribeLogGroupsCommandInput>()(
   z.object({
-    accoutIdentifiers: z
+    accountIdentifiers: z
       .array(z.string())
       .optional()
       .describe(
