@@ -9,9 +9,12 @@ import {
 } from '@aws-sdk/client-cloudwatch-logs'
 import { z } from 'zod'
 import { typeSafeSchema } from '../../lib/zod/helper.ts'
+import { type OptionalToUndefined } from '../../types/util.ts'
 import { MetadataSchema } from './common.ts'
 
-export const CreateLogGroupRequestSchema = typeSafeSchema<CreateLogGroupCommandInput>()(
+export const CreateLogGroupRequestSchema = typeSafeSchema<
+  OptionalToUndefined<CreateLogGroupCommandInput>
+>()(
   z.object({
     logGroupName: z.string().describe('A name for the log group.'),
     kmsKeyId: z
@@ -29,13 +32,17 @@ export const CreateLogGroupRequestSchema = typeSafeSchema<CreateLogGroupCommandI
   }),
 )
 
-export const CreateLogGroupResponseSchema = typeSafeSchema<CreateLogGroupCommandOutput>()(
+export const CreateLogGroupResponseSchema = typeSafeSchema<
+  OptionalToUndefined<CreateLogGroupCommandOutput>
+>()(
   z.object({
     $metadata: MetadataSchema,
   }),
 )
 
-export const DescribeLogGroupsRequestSchema = typeSafeSchema<DescribeLogGroupsCommandInput>()(
+export const DescribeLogGroupsRequestSchema = typeSafeSchema<
+  OptionalToUndefined<DescribeLogGroupsCommandInput>
+>()(
   z.object({
     accountIdentifiers: z
       .array(z.string())
@@ -65,7 +72,9 @@ export const DescribeLogGroupsRequestSchema = typeSafeSchema<DescribeLogGroupsCo
   }),
 )
 
-export const DescribeLogGroupsResponseSchema = typeSafeSchema<DescribeLogGroupsCommandOutput>()(
+export const DescribeLogGroupsResponseSchema = typeSafeSchema<
+  OptionalToUndefined<DescribeLogGroupsCommandOutput>
+>()(
   z.object({
     $metadata: MetadataSchema,
     logGroups: z
