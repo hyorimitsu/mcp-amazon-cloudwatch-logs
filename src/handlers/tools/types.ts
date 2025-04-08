@@ -8,6 +8,7 @@ import type * as groupsSchema from '../../operations/schemas/groups.ts'
  */
 export const ToolName = {
   CreateLogGroup: 'create_log_group',
+  DescribeLogGroups: 'describe_log_groups',
 } as const
 
 type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
@@ -21,6 +22,11 @@ type ToolConfigurations = {
     requestSchema: typeof groupsSchema.CreateLogGroupRequestSchema
     requestType: z.infer<typeof groupsSchema.CreateLogGroupRequestSchema>
     responseType: z.infer<typeof groupsSchema.CreateLogGroupResponseSchema>
+  }
+  [ToolName.DescribeLogGroups]: {
+    requestSchema: typeof groupsSchema.DescribeLogGroupsRequestSchema
+    requestType: z.infer<typeof groupsSchema.DescribeLogGroupsRequestSchema>
+    responseType: z.infer<typeof groupsSchema.DescribeLogGroupsResponseSchema>
   }
 }
 

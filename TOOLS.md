@@ -19,6 +19,8 @@ Creates a new Amazon CloudWatch Logs log group.
 
 **Example:**
 
+Request:
+
 ```json
 {
   "logGroupName": "my-application-logs",
@@ -29,17 +31,64 @@ Creates a new Amazon CloudWatch Logs log group.
 }
 ```
 
-**Response:**
+Response:
 
 ```json
 {
   "$metadata": {
     "httpStatusCode": 200,
     "requestId": "example-request-id",
-    "extendedRequestId": "example-extended-request-id",
-    "cfId": "example-cf-id",
     "attempts": 1,
     "totalRetryDelay": 0
   }
+}
+```
+
+### describe_log_groups
+
+List and describe Amazon CloudWatch Logs log groups.
+
+**Parameters:**
+
+- `accountIdentifiers` (array of strings, optional): When `includeLinkedAccounts` is set to `True`, use this parameter to specify the list of accounts to search
+- `logGroupNamePrefix` (string, optional): The prefix to match
+- `logGroupNamePattern` (string, optional): If you specify a string for this parameter, the operation returns only log groups that have names that match the string based on a case-sensitive substring search
+- `nextToken` (string, optional): The token for the next set of items to return
+- `limit` (number, optional): The maximum number of items returned
+- `includeLinkedAccounts` (boolean, optional): If you are using a monitoring account, set this to `True` to have the operation return log groups in the accounts listed in `accountIdentifiers`
+- `logGroupClass` (string, optional): Specifies the log group class for this log group
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupNamePrefix": "my-application",
+  "limit": 10
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "logGroups": [
+    {
+      "logGroupName": "my-application-logs",
+      "creationTime": 1617234567890,
+      "metricFilterCount": 0,
+      "arn": "arn:aws:logs:us-east-1:123456789012:log-group:my-application-logs:*",
+      "logGroupClass": "STANDARD",
+      "logGroupArn": "arn:aws:logs:us-east-1:123456789012:log-group:my-application-logs"
+    }
+  ],
+  "nextToken": "example-next-token"
 }
 ```

@@ -47,7 +47,11 @@ export const setRequestHandler = (server: Server) => {
 
       const tool = callTools[request.params.name]
       const args = tool.requestSchema.parse(request.params.arguments)
-      const results = await tool.operationFn(args)
+
+      // Type assertion is needed because TypeScript cannot infer
+      // that the parsed arguments match the expected type for the specific tool
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const results = await tool.operationFn(args as any)
 
       return {
         content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
