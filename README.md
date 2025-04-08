@@ -50,12 +50,13 @@ To use the MCP server, you need to configure it with your AWS credentials. You c
 
 ## Available Tools
 
-| Tool Name           | Description                                                    |
-| ------------------- | -------------------------------------------------------------- |
-| create_log_group    | Creates a new Amazon CloudWatch Logs log group                 |
-| describe_log_groups | List and describe Amazon CloudWatch Logs log groups            |
-| delete_log_group    | Delete an Amazon CloudWatch Logs log group                     |
-| create_log_stream   | Create a new log stream in an Amazon CloudWatch Logs log group |
+| Tool Name            | Description                                                          |
+| -------------------- | -------------------------------------------------------------------- |
+| create_log_group     | Creates a new Amazon CloudWatch Logs log group                       |
+| describe_log_groups  | List and describe Amazon CloudWatch Logs log groups                  |
+| delete_log_group     | Delete an Amazon CloudWatch Logs log group                           |
+| create_log_stream    | Create a new log stream in an Amazon CloudWatch Logs log group       |
+| describe_log_streams | List and describe log streams in an Amazon CloudWatch Logs log group |
 
 For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs/blob/main/TOOLS.md).
 
