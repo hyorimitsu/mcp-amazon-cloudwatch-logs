@@ -43,3 +43,56 @@ Creates a new Amazon CloudWatch Logs log group.
   }
 }
 ```
+
+### describe_log_groups
+
+List and describe Amazon CloudWatch Logs log groups.
+
+**Parameters:**
+
+- `accoutIdentifiers` (array of strings, optional): When `includeLinkedAccounts` is set to `True`, use this parameter to specify the list of accounts to search
+- `logGroupNamePrefix` (string, optional): The prefix to match
+- `logGroupNamePattern` (string, optional): If you specify a string for this parameter, the operation returns only log groups that have names that match the string based on a case-sensitive substring search
+- `nextToken` (string, optional): The token for the next set of items to return
+- `limit` (number, optional): The maximum number of items returned
+- `includeLinkedAccounts` (boolean, optional): If you are using a monitoring account, set this to `True` to have the operation return log groups in the accounts listed in `accountIdentifiers`
+- `logGroupClass` (string, optional): Specifies the log group class for this log group
+
+**Example:**
+
+```json
+{
+  "logGroupNamePrefix": "my-application",
+  "limit": 10
+}
+```
+
+**Response:**
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "extendedRequestId": "example-extended-request-id",
+    "cfId": "example-cf-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "logGroups": [
+    {
+      "logGroupName": "my-application-logs",
+      "creationTime": 1617234567890,
+      "retentionInDays": 30,
+      "metricFilterCount": 0,
+      "arn": "arn:aws:logs:us-east-1:123456789012:log-group:my-application-logs",
+      "storedBytes": 1234567,
+      "kmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/abcd1234-ab12-cd34-ef56-abcdef123456",
+      "dataProtectionStatus": "ACTIVATED",
+      "inheritedProperties": ["ACCOUNT_DATA_PROTECTION"],
+      "logGroupClass": "STANDARD"
+    }
+  ],
+  "nextToken": "example-next-token"
+}
+```
