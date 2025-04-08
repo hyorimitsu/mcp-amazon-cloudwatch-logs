@@ -1,10 +1,15 @@
 import {
   type CreateLogGroupCommandInput,
   type CreateLogGroupCommandOutput,
+  DataProtectionStatus,
+  type DescribeLogGroupsCommandInput,
+  type DescribeLogGroupsCommandOutput,
+  InheritedProperty,
   LogGroupClass,
 } from '@aws-sdk/client-cloudwatch-logs'
 import { z } from 'zod'
 import { typeSafeSchema } from '../../lib/zod/helper.ts'
+import { MetadataSchema } from './common.ts'
 
 export const CreateLogGroupRequestSchema = typeSafeSchema<CreateLogGroupCommandInput>()(
   z.object({
@@ -26,29 +31,90 @@ export const CreateLogGroupRequestSchema = typeSafeSchema<CreateLogGroupCommandI
 
 export const CreateLogGroupResponseSchema = typeSafeSchema<CreateLogGroupCommandOutput>()(
   z.object({
-    $metadata: z
-      .object({
-        httpStatusCode: z
-          .number()
-          .describe('The status code of the last HTTP response received for this operation.'),
-        requestId: z
-          .string()
-          .describe(
-            'A unique identifier for the last request sent for this operation. Often requested by AWS service teams to aid in debugging.',
-          ),
-        extendedRequestId: z
-          .string()
-          .describe('A secondary identifier for the last request sent. Used for debugging.'),
-        cfId: z
-          .string()
-          .describe('A tertiary identifier for the last request sent. Used for debugging.'),
-        attempts: z.number().describe('The number of times this operation was attempted.'),
-        totalRetryDelay: z
-          .number()
-          .describe(
-            'The total amount of time (in milliseconds) that was spent waiting between retry attempts.',
-          ),
-      })
-      .describe('Metadata pertaining to this request.'),
+    $metadata: MetadataSchema,
+  }),
+)
+
+export const DescribeLogGroupsRequestSchema = typeSafeSchema<DescribeLogGroupsCommandInput>()(
+  z.object({
+    accoutIdentifiers: z
+      .array(z.string())
+      .optional()
+      .describe(
+        'When `includeLinkedAccounts` is set to `True`, use this parameter to specify the list of accounts to search.',
+      ),
+    logGroupNamePrefix: z.string().optional().describe('The prefix to match.'),
+    logGroupNamePattern: z
+      .string()
+      .optional()
+      .describe(
+        'If you specify a string for this parameter, the operation returns only log groups that have names that match the string based on a case-sensitive substring search.',
+      ),
+    nextToken: z.string().optional().describe('The token for the next set of items to return.'),
+    limit: z.number().optional().describe('The maximum number of items returned.'),
+    includeLinkedAccounts: z
+      .boolean()
+      .optional()
+      .describe(
+        'If you are using a monitoring account, set this to `True` to have the operation return log groups in the accounts listed in `accountIdentifiers`.',
+      ),
+    logGroupClass: z
+      .nativeEnum(LogGroupClass)
+      .optional()
+      .describe('Specifies the log group class for this log group'),
+  }),
+)
+
+export const DescribeLogGroupsResponseSchema = typeSafeSchema<DescribeLogGroupsCommandOutput>()(
+  z.object({
+    $metadata: MetadataSchema,
+    logGroups: z
+      .array(
+        z.object({
+          logGroupName: z.string().optional().describe('The name of the log group.'),
+          creationTime: z
+            .number()
+            .optional()
+            .describe(
+              'The creation time of the log group, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+            ),
+          retentionInDays: z
+            .number()
+            .optional()
+            .describe('The number of days to retain the log events in the specified log group.'),
+          metricFilterCount: z.number().optional().describe('The number of metric filters.'),
+          arn: z.string().optional().describe('The Amazon Resource Name (ARN) of the log group.'),
+          storedBytes: z.number().optional().describe('The number of bytes stored.'),
+          kmsKeyId: z
+            .string()
+            .optional()
+            .describe(
+              'The Amazon Resource Name (ARN) of the KMS key to use when encrypting log data.',
+            ),
+          dataProtectionStatus: z
+            .nativeEnum(DataProtectionStatus)
+            .optional()
+            .describe(
+              'Displays whether this log group has a protection policy, or whether it had one in the past.',
+            ),
+          inheritedProperties: z
+            .array(z.nativeEnum(InheritedProperty))
+            .optional()
+            .describe(
+              'Displays all the properties that this log group has inherited from account-level settings.',
+            ),
+          logGroupClass: z
+            .nativeEnum(LogGroupClass)
+            .optional()
+            .describe('This specifies the log group class for this log group.'),
+          logGroupArn: z
+            .string()
+            .optional()
+            .describe('The Amazon Resource Name (ARN) of the log group.'),
+        }),
+      )
+      .optional()
+      .describe('The log groups.'),
+    nextToken: z.string().optional().describe('The token for the next set of items to return.'),
   }),
 )

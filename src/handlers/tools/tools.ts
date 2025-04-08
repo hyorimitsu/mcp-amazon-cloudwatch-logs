@@ -9,6 +9,10 @@ export const tools: ListToolDefinition = {
     description: 'Create a new Amazon CloudWatch Logs log group',
     inputSchema: zodToJsonSchema(groupsSchema.CreateLogGroupRequestSchema),
   },
+  [ToolName.DescribeLogGroups]: {
+    description: 'List and describe Amazon CloudWatch Logs log groups',
+    inputSchema: zodToJsonSchema(groupsSchema.DescribeLogGroupsRequestSchema),
+  },
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for execution)
@@ -16,5 +20,9 @@ export const callTools: CallToolDefinition = {
   [ToolName.CreateLogGroup]: {
     requestSchema: groupsSchema.CreateLogGroupRequestSchema,
     operationFn: groups.createLogGroup,
+  },
+  [ToolName.DescribeLogGroups]: {
+    requestSchema: groupsSchema.DescribeLogGroupsRequestSchema,
+    operationFn: groups.describeLogGroups,
   },
 }
