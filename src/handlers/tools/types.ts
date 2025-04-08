@@ -9,6 +9,7 @@ import type * as groupsSchema from '../../operations/schemas/groups.ts'
 export const ToolName = {
   CreateLogGroup: 'create_log_group',
   DescribeLogGroups: 'describe_log_groups',
+  DeleteLogGroup: 'delete_log_group',
 } as const
 
 type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
@@ -27,6 +28,11 @@ type ToolConfigurations = {
     requestSchema: typeof groupsSchema.DescribeLogGroupsRequestSchema
     requestType: z.infer<typeof groupsSchema.DescribeLogGroupsRequestSchema>
     responseType: z.infer<typeof groupsSchema.DescribeLogGroupsResponseSchema>
+  }
+  [ToolName.DeleteLogGroup]: {
+    requestSchema: typeof groupsSchema.DeleteLogGroupRequestSchema
+    requestType: z.infer<typeof groupsSchema.DeleteLogGroupRequestSchema>
+    responseType: z.infer<typeof groupsSchema.DeleteLogGroupResponseSchema>
   }
 }
 
