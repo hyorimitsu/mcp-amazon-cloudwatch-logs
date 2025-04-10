@@ -241,3 +241,55 @@ Response:
   }
 }
 ```
+
+### put_log_events
+
+Write log events to a specified log stream in Amazon CloudWatch Logs.
+
+**Parameters:**
+
+- `logGroupName` (string, required): The name of the log group
+- `logStreamName` (string, required): The name of the log stream
+- `logEvents` (array, required): The log events. Each log event requires:
+  - `timestamp` (number, required): The time the event occurred, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC
+  - `message` (string, required): The raw event message
+- `sequenceToken` (string, optional): The sequence token obtained from the response of the previous `PutLogEvents` call
+- `entity` (object, optional): The entity associated with the log events. This parameter is optional and can be omitted. If provided, there are specific requirements from the AWS CloudWatch Logs service:
+  - `keyAttributes` (object, optional): The attributes of the entity which identify the specific entity, as a list of key-value pairs
+  - `attributes` (object, optional): Additional attributes of the entity that are not used to specify the identity of the entity
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupName": "my-application-logs",
+  "logStreamName": "instance-1234",
+  "logEvents": [
+    {
+      "timestamp": 1617234567890,
+      "message": "Application started successfully"
+    },
+    {
+      "timestamp": 1617234568000,
+      "message": "User login: user123"
+    }
+  ],
+  "sequenceToken": "49039859626139772178092492226314046488092720276871163859"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "nextSequenceToken": "49661406557421394122123153072888641584939163463656145986"
+}
+```
