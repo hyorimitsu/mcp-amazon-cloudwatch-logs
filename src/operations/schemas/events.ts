@@ -1,5 +1,7 @@
 import {
   EntityRejectionErrorType,
+  type GetLogEventsCommandInput,
+  type GetLogEventsCommandOutput,
   type PutLogEventsCommandInput,
   type PutLogEventsCommandOutput,
 } from '@aws-sdk/client-cloudwatch-logs'
@@ -82,5 +84,80 @@ export const PutLogEventsResponseSchema = typeSafeSchema<
       })
       .optional()
       .describe('Information about why the entity is rejected when calling `PutLogEvents`.'),
+  }),
+)
+
+export const GetLogEventsRequestSchema = typeSafeSchema<
+  OptionalToUndefined<GetLogEventsCommandInput>
+>()(
+  z.object({
+    logGroupName: z.string().optional().describe('The name of the log group.'),
+    logGroupIdentifier: z
+      .string()
+      .optional()
+      .describe('Specify either the name or ARN of the log group to view events from.'),
+    logStreamName: z.string().describe('The name of the log stream.'),
+    startTime: z
+      .number()
+      .optional()
+      .describe(
+        'The start of the time range, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+      ),
+    endTime: z
+      .number()
+      .optional()
+      .describe(
+        'The end of the time range, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+      ),
+    nextToken: z.string().optional().describe('The token for the next set of items to return.'),
+    limit: z.number().optional().describe('The maximum number of log events returned.'),
+    startFromHead: z
+      .boolean()
+      .optional()
+      .describe(
+        'If the value is true, the earliest log events are returned first. If the value is false, the latest log events are returned first.',
+      ),
+    unmask: z
+      .boolean()
+      .optional()
+      .describe(
+        'Specify true to display the log event fields with all sensitive data unmasked and visible.',
+      ),
+  }),
+)
+
+export const GetLogEventsResponseSchema = typeSafeSchema<
+  OptionalToUndefined<GetLogEventsCommandOutput>
+>()(
+  z.object({
+    $metadata: MetadataSchema,
+    events: z
+      .array(
+        z.object({
+          timestamp: z
+            .number()
+            .optional()
+            .describe(
+              'The time the event occurred, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+            ),
+          message: z.string().optional().describe('The data contained in the log event.'),
+          ingestionTime: z
+            .number()
+            .optional()
+            .describe(
+              'The time the event was ingested, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+            ),
+        }),
+      )
+      .optional()
+      .describe('The events.'),
+    nextForwardToken: z
+      .string()
+      .optional()
+      .describe('The token for the next set of items in the forward direction.'),
+    nextBackwardToken: z
+      .string()
+      .optional()
+      .describe('The token for the next set of items in the backward direction.'),
   }),
 )
