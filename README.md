@@ -50,15 +50,16 @@ To use the MCP server, you need to configure it with your AWS credentials. You c
 
 ## Available Tools
 
-| Tool Name            | Description                                                          |
-| -------------------- | -------------------------------------------------------------------- |
-| create_log_group     | Creates a new Amazon CloudWatch Logs log group                       |
-| describe_log_groups  | List and describe Amazon CloudWatch Logs log groups                  |
-| delete_log_group     | Delete an Amazon CloudWatch Logs log group                           |
-| create_log_stream    | Create a new log stream in an Amazon CloudWatch Logs log group       |
-| describe_log_streams | List and describe log streams in an Amazon CloudWatch Logs log group |
-| delete_log_stream    | Delete a log stream in an Amazon CloudWatch Logs log group           |
-| put_log_events       | Write log events to a specified log stream in Amazon CloudWatch Logs |
+| Tool Name            | Description                                                               |
+| -------------------- | ------------------------------------------------------------------------- |
+| create_log_group     | Creates a new Amazon CloudWatch Logs log group                            |
+| describe_log_groups  | List and describe Amazon CloudWatch Logs log groups                       |
+| delete_log_group     | Delete an Amazon CloudWatch Logs log group                                |
+| create_log_stream    | Create a new log stream in an Amazon CloudWatch Logs log group            |
+| describe_log_streams | List and describe log streams in an Amazon CloudWatch Logs log group      |
+| delete_log_stream    | Delete a log stream in an Amazon CloudWatch Logs log group                |
+| put_log_events       | Write log events to a specified log stream in Amazon CloudWatch Logs      |
+| get_log_events       | Retrieve log events from a specified log stream in Amazon CloudWatch Logs |
 
 For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs/blob/main/TOOLS.md).
 
