@@ -41,6 +41,11 @@ export const tools: ListToolDefinition = {
     description: 'Retrieve log events from a specified log stream in Amazon CloudWatch Logs',
     inputSchema: zodToJsonSchema(eventsSchema.GetLogEventsRequestSchema),
   },
+  [ToolName.FilterLogEvents]: {
+    description:
+      'Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs',
+    inputSchema: zodToJsonSchema(eventsSchema.FilterLogEventsRequestSchema),
+  },
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for execution)
@@ -76,5 +81,9 @@ export const callTools: CallToolDefinition = {
   [ToolName.GetLogEvents]: {
     requestSchema: eventsSchema.GetLogEventsRequestSchema,
     operationFn: events.getLogEvents,
+  },
+  [ToolName.FilterLogEvents]: {
+    requestSchema: eventsSchema.FilterLogEventsRequestSchema,
+    operationFn: events.filterLogEvents,
   },
 }

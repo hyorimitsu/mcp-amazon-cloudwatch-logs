@@ -17,6 +17,7 @@ export const ToolName = {
   DeleteLogStream: 'delete_log_stream',
   PutLogEvents: 'put_log_events',
   GetLogEvents: 'get_log_events',
+  FilterLogEvents: 'filter_log_events',
 } as const
 
 type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
@@ -65,6 +66,11 @@ type ToolConfigurations = {
     requestSchema: typeof eventsSchema.GetLogEventsRequestSchema
     requestType: z.infer<typeof eventsSchema.GetLogEventsRequestSchema>
     responseType: z.infer<typeof eventsSchema.GetLogEventsResponseSchema>
+  }
+  [ToolName.FilterLogEvents]: {
+    requestSchema: typeof eventsSchema.FilterLogEventsRequestSchema
+    requestType: z.infer<typeof eventsSchema.FilterLogEventsRequestSchema>
+    responseType: z.infer<typeof eventsSchema.FilterLogEventsResponseSchema>
   }
 }
 

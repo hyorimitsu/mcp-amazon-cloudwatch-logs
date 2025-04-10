@@ -1,7 +1,13 @@
-import { GetLogEventsCommand, PutLogEventsCommand } from '@aws-sdk/client-cloudwatch-logs'
+import {
+  FilterLogEventsCommand,
+  GetLogEventsCommand,
+  PutLogEventsCommand,
+} from '@aws-sdk/client-cloudwatch-logs'
 import { type z } from 'zod'
 import { client } from '../lib/aws/client.ts'
 import {
+  FilterLogEventsRequestSchema,
+  FilterLogEventsResponseSchema,
   GetLogEventsRequestSchema,
   GetLogEventsResponseSchema,
   PutLogEventsRequestSchema,
@@ -28,4 +34,15 @@ export const getLogEvents = async (
   const output = await client.send(command)
 
   return GetLogEventsResponseSchema.parse(output)
+}
+
+export const filterLogEvents = async (
+  params: z.infer<typeof FilterLogEventsRequestSchema>,
+): Promise<z.infer<typeof FilterLogEventsResponseSchema>> => {
+  const input = FilterLogEventsRequestSchema.parse(params)
+
+  const command = new FilterLogEventsCommand(input)
+  const output = await client.send(command)
+
+  return FilterLogEventsResponseSchema.parse(output)
 }

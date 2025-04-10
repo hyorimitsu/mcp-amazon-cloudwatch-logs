@@ -1,5 +1,7 @@
 import {
   EntityRejectionErrorType,
+  type FilterLogEventsCommandInput,
+  type FilterLogEventsCommandOutput,
   type GetLogEventsCommandInput,
   type GetLogEventsCommandOutput,
   type PutLogEventsCommandInput,
@@ -159,5 +161,85 @@ export const GetLogEventsResponseSchema = typeSafeSchema<
       .string()
       .optional()
       .describe('The token for the next set of items in the backward direction.'),
+  }),
+)
+
+export const FilterLogEventsRequestSchema = typeSafeSchema<
+  OptionalToUndefined<FilterLogEventsCommandInput>
+>()(
+  z.object({
+    logGroupName: z.string().optional().describe('The name of the log group to search.'),
+    logGroupIdentifier: z
+      .string()
+      .optional()
+      .describe('Specify either the name or ARN of the log group to view log events from.'),
+    logStreamNames: z
+      .array(z.string())
+      .optional()
+      .describe('Filters the results to only logs from the log streams in this list.'),
+    logStreamNamePrefix: z
+      .string()
+      .optional()
+      .describe(
+        'Filters the results to include only events from log streams that have names starting with this prefix.',
+      ),
+    startTime: z
+      .number()
+      .optional()
+      .describe(
+        'The start of the time range, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+      ),
+    endTime: z
+      .number()
+      .optional()
+      .describe(
+        'The end of the time range, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+      ),
+    filterPattern: z.string().optional().describe('The filter pattern to use.'),
+    nextToken: z.string().optional().describe('The token for the next set of events to return.'),
+    limit: z.number().optional().describe('The maximum number of events to return.'),
+    unmask: z
+      .boolean()
+      .optional()
+      .describe(
+        'Specify true to display the log event fields with all sensitive data unmasked and visible.',
+      ),
+  }),
+)
+
+export const FilterLogEventsResponseSchema = typeSafeSchema<
+  OptionalToUndefined<FilterLogEventsCommandOutput>
+>()(
+  z.object({
+    $metadata: MetadataSchema,
+    events: z
+      .array(
+        z.object({
+          logStreamName: z
+            .string()
+            .optional()
+            .describe('The name of the log stream to which this event belongs.'),
+          timestamp: z
+            .number()
+            .optional()
+            .describe(
+              'The time the event occurred, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+            ),
+          message: z.string().optional().describe('The data contained in the log event.'),
+          ingestionTime: z
+            .number()
+            .optional()
+            .describe(
+              'The time the event was ingested, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC.',
+            ),
+          eventId: z.string().optional().describe('The ID of the event.'),
+        }),
+      )
+      .optional()
+      .describe('The matched events.'),
+    nextToken: z
+      .string()
+      .optional()
+      .describe('The token to use when requesting the next set of items.'),
   }),
 )
