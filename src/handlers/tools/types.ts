@@ -1,4 +1,5 @@
 import { type z } from 'zod'
+import type * as eventsSchema from '../../operations/schemas/events.ts'
 import type * as groupsSchema from '../../operations/schemas/groups.ts'
 import type * as streamsSchema from '../../operations/schemas/streams.ts'
 
@@ -14,6 +15,7 @@ export const ToolName = {
   CreateLogStream: 'create_log_stream',
   DescribeLogStreams: 'describe_log_streams',
   DeleteLogStream: 'delete_log_stream',
+  PutLogEvents: 'put_log_events',
 } as const
 
 type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
@@ -52,6 +54,11 @@ type ToolConfigurations = {
     requestSchema: typeof streamsSchema.DeleteLogStreamRequestSchema
     requestType: z.infer<typeof streamsSchema.DeleteLogStreamRequestSchema>
     responseType: z.infer<typeof streamsSchema.DeleteLogStreamResponseSchema>
+  }
+  [ToolName.PutLogEvents]: {
+    requestSchema: typeof eventsSchema.PutLogEventsRequestSchema
+    requestType: z.infer<typeof eventsSchema.PutLogEventsRequestSchema>
+    responseType: z.infer<typeof eventsSchema.PutLogEventsResponseSchema>
   }
 }
 

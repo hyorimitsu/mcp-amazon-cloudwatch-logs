@@ -1,5 +1,7 @@
 import { zodToJsonSchema } from 'zod-to-json-schema'
+import * as events from '../../operations/events.ts'
 import * as groups from '../../operations/groups.ts'
+import * as eventsSchema from '../../operations/schemas/events.ts'
 import * as groupsSchema from '../../operations/schemas/groups.ts'
 import * as streamsSchema from '../../operations/schemas/streams.ts'
 import * as streams from '../../operations/streams.ts'
@@ -31,6 +33,10 @@ export const tools: ListToolDefinition = {
     description: 'Delete a log stream in an Amazon CloudWatch Logs log group',
     inputSchema: zodToJsonSchema(streamsSchema.DeleteLogStreamRequestSchema),
   },
+  [ToolName.PutLogEvents]: {
+    description: 'Write log events to a specified log stream in Amazon CloudWatch Logs',
+    inputSchema: zodToJsonSchema(eventsSchema.PutLogEventsRequestSchema),
+  },
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for execution)
@@ -58,5 +64,9 @@ export const callTools: CallToolDefinition = {
   [ToolName.DeleteLogStream]: {
     requestSchema: streamsSchema.DeleteLogStreamRequestSchema,
     operationFn: streams.deleteLogStream,
+  },
+  [ToolName.PutLogEvents]: {
+    requestSchema: eventsSchema.PutLogEventsRequestSchema,
+    operationFn: events.putLogEvents,
   },
 }
