@@ -351,3 +351,64 @@ Response:
   "nextBackwardToken": "b/12345678901234567890123456789012345678901234567890123456"
 }
 ```
+
+### filter_log_events
+
+Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs.
+
+**Parameters:**
+
+- `logGroupName` (string, optional): The name of the log group to search
+- `logGroupIdentifier` (string, optional): Specify either the name or ARN of the log group to view log events from
+- `logStreamNames` (array of strings, optional): Filters the results to only logs from the log streams in this list
+- `logStreamNamePrefix` (string, optional): Filters the results to include only events from log streams that have names starting with this prefix
+- `startTime` (number, optional): The start of the time range, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC
+- `endTime` (number, optional): The end of the time range, expressed as the number of milliseconds after Jan 1, 1970 00:00:00 UTC
+- `filterPattern` (string, optional): The filter pattern to use
+- `nextToken` (string, optional): The token for the next set of events to return
+- `limit` (number, optional): The maximum number of events to return
+- `unmask` (boolean, optional): Specify true to display the log event fields with all sensitive data unmasked and visible
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupName": "my-application-logs",
+  "filterPattern": "ERROR",
+  "startTime": 1617234567000,
+  "endTime": 1617234569000,
+  "limit": 100
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "events": [
+    {
+      "logStreamName": "instance-1234",
+      "timestamp": 1617234567890,
+      "message": "ERROR: Database connection failed",
+      "ingestionTime": 1617234568000,
+      "eventId": "12345678901234567890123456789012345678901234567890123456"
+    },
+    {
+      "logStreamName": "instance-5678",
+      "timestamp": 1617234568500,
+      "message": "ERROR: Authentication failed for user 'admin'",
+      "ingestionTime": 1617234569000,
+      "eventId": "98765432109876543210987654321098765432109876543210987654"
+    }
+  ],
+  "nextToken": "eyJsb2dTdHJlYW1OYW1lIjoiaW5zdGFuY2UtNTY3OCIsImV2ZW50SWQiOiI5ODc2NTQzMjEwOTg3NjU0MzIxMDk4NzY1NDMyMTA5ODc2NTQzMjEwOTg3NjU0MzIxMDk4NzY1NCJ9"
+}
+```
