@@ -17,9 +17,13 @@ import {
   type ToolNameType,
 } from './types.ts'
 
-type AdditionalProperty = { [N in ToolNameType]: { operationType: OperationType } }
+// prettier-ignore
+type ToolDefinition =
+  ListToolDefinition &
+  CallToolDefinition &
+  { [N in ToolNameType]: { operationType: OperationType } }
 
-export const toolDefinitions: ListToolDefinition & CallToolDefinition & AdditionalProperty = {
+export const toolDefinition: ToolDefinition = {
   [ToolName.CreateLogGroup]: {
     name: ToolName.CreateLogGroup,
     description: 'Create a new Amazon CloudWatch Logs log group',
@@ -96,7 +100,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition & Addition
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for listing)
-export const tools: ListToolDefinitionItem[] = Object.entries(toolDefinitions)
+export const tools: ListToolDefinitionItem[] = Object.entries(toolDefinition)
   .filter(([, value]) => (config.readonly ? value.operationType !== Operation.WRITE : true))
   .map(([, value]) => ({
     name: value.name,
@@ -105,7 +109,7 @@ export const tools: ListToolDefinitionItem[] = Object.entries(toolDefinitions)
   }))
 
 // Available tools for Amazon CloudWatch Logs operations (for execution)
-export const callTools = Object.entries(toolDefinitions)
+export const callTools = Object.entries(toolDefinition)
   .filter(([, value]) => (config.readonly ? value.operationType !== Operation.WRITE : true))
   .reduce<CallToolDefinition>((acc, [key, value]) => {
     if (isToolName(key)) {
