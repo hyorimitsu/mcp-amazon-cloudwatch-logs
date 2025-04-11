@@ -1,6 +1,6 @@
 # Amazon CloudWatch Logs MCP Server
 
-A Model Context Protocol (MCP) server that provides tools for interacting with Amazon CloudWatch Logs services. This server enables AI assistant to manage CloudWatch logs through a standardized interface using AWS SDK.
+A Model Context Protocol (MCP) server that provides tools for interacting with Amazon CloudWatch Logs services. This server enables AI assistants to manage CloudWatch logs through a standardized interface using AWS SDK.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -8,7 +8,7 @@ A Model Context Protocol (MCP) server that provides tools for interacting with A
 
 ## Overview
 
-This MCP server allows AI assistant to interact with Amazon CloudWatch Logs through the Model Context Protocol. It provides a standardized interface for performing various CloudWatch Logs operations, enabling comprehensive management and monitoring of log data.
+This MCP server allows AI assistants to interact with Amazon CloudWatch Logs through the Model Context Protocol. It provides a standardized interface for performing various CloudWatch Logs operations, enabling comprehensive management and monitoring of log data.
 
 ## Setup
 
@@ -120,12 +120,84 @@ pnpm run inspector
 
 ## Extending the Server
 
-The server is designed to be easily extensible. To add a new CloudWatch Logs operation:
+The server is designed to be easily extensible. To add a new CloudWatch Logs operation, follow these steps:
 
-1. Create a schema in `src/operations/schemas/`
-2. Implement the operation in `src/operations/`
-3. Add the tool definition to `src/handlers/tools/types.ts`
-4. Add the tool to the tools list in `src/handlers/tools/tools.ts`
+1. **Define schemas** in `src/operations/schemas/`:
+
+   - Create or update a schema file (e.g., `myoperation.ts`) under `src/operations/schemas/`
+   - Define request and response schemas using Zod and the `typeSafeSchema` helper
+   - Example:
+
+     ```typescript
+     export const MyOperationRequestSchema = typeSafeSchema<
+       OptionalToUndefined<MyOperationCommandInput>
+     >()(
+       z.object({
+         paramName: z.string().describe('Description of the parameter'),
+         optionalParam: z.number().optional().describe('Description of the optional parameter'),
+       }),
+     )
+
+     export const MyOperationResponseSchema = typeSafeSchema<
+       OptionalToUndefined<MyOperationCommandOutput>
+     >()(
+       z.object({
+         $metadata: MetadataSchema,
+         resultField: z.string().optional().describe('Description of the result field'),
+       }),
+     )
+     ```
+
+2. **Implement the operation** in `src/operations/`:
+
+   - Create or update an operation file (e.g., `myoperation.ts`) under `src/operations/`
+   - Implement the operation function that uses the AWS SDK to perform the CloudWatch Logs operation
+   - Example:
+
+     ```typescript
+     export const myOperation = async (
+       params: z.infer<typeof MyOperationRequestSchema>,
+     ): Promise<z.infer<typeof MyOperationResponseSchema>> => {
+       const input = MyOperationRequestSchema.parse(params)
+
+       const command = new MyOperationCommand(input)
+       const output = await client.send(command)
+
+       return MyOperationResponseSchema.parse(output)
+     }
+     ```
+
+3. **Add the tool name** to `src/handlers/tools/types.ts`:
+
+   - Add a new entry to the `ToolName` object
+   - Example:
+
+     ```typescript
+     export const ToolName = {
+       // Existing tool names...
+       MyOperation: 'my_operation',
+     } as const
+     ```
+
+4. **Add the tool definition** to `src/handlers/tools/tools.ts`:
+
+   - Add a new entry to the `toolDefinitions` object
+   - Example:
+
+     ```typescript
+     const toolDefinitions: ListToolDefinition & CallToolDefinition = {
+       // Existing tool definitions...
+       [ToolName.MyOperation]: {
+         name: ToolName.MyOperation,
+         description: 'Description of the new operation',
+         inputSchema: zodToJsonSchema(myOperationSchema.MyOperationRequestSchema),
+         requestSchema: myOperationSchema.MyOperationRequestSchema,
+         operationFn: myOperation.myOperation,
+       },
+     }
+     ```
+
+By following these steps, you can extend the server with new CloudWatch Logs operations while maintaining the same structure and patterns used in the existing codebase.
 
 ## License
 
