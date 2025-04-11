@@ -17,4 +17,9 @@ export const config = {
   aws: {
     region: getEnv(process.env.AWS_REGION, 'us-east-1'),
   },
+  /**
+   * When set to true, only reference operations (read-only) are allowed.
+   * This prevents any operations that would modify AWS resources.
+   */
+  readonly: getEnv(process.env.READONLY, 'false') === 'true',
 }
