@@ -11,13 +11,7 @@ import { isToolName } from './types.ts'
 
 export const setRequestHandler = (server: Server) => {
   // Handler for listing available tools
-  server.setRequestHandler(ListToolsRequestSchema, async () => ({
-    tools: Object.entries(tools).map(([key, item]) => ({
-      name: key,
-      description: item.description,
-      inputSchema: item.inputSchema,
-    })),
-  }))
+  server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools }))
 
   // Handler for tool execution requests
   server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
@@ -47,11 +41,7 @@ export const setRequestHandler = (server: Server) => {
 
       const tool = callTools[request.params.name]
       const args = tool.requestSchema.parse(request.params.arguments)
-
-      // Type assertion is needed because TypeScript cannot infer
-      // that the parsed arguments match the expected type for the specific tool
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const results = await tool.operationFn(args as any)
+      const results = await tool.operationFn(args as z.infer<typeof tool.requestSchema>)
 
       return {
         content: [{ type: 'text', text: JSON.stringify(results, null, 2) }],
