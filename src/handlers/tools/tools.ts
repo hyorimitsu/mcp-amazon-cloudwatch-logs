@@ -13,7 +13,7 @@ import {
   ToolName,
 } from './types.ts'
 
-const toolDefinitions: ListToolDefinition & CallToolDefinition = {
+export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
   [ToolName.CreateLogGroup]: {
     name: ToolName.CreateLogGroup,
     description: 'Create a new Amazon CloudWatch Logs log group',

@@ -4,7 +4,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { config } from './config/index.ts'
 import { setRequestHandler } from './handlers/tools/index.ts'
-import { tools } from './handlers/tools/tools.ts'
+import { toolDefinitions } from './handlers/tools/tools.ts'
 
 const server = new Server(
   {
@@ -13,17 +13,7 @@ const server = new Server(
   },
   {
     capabilities: {
-      tools: Object.entries(tools).reduce(
-        (acc, [key, item]) => ({
-          ...acc,
-          [key]: {
-            name: key,
-            description: item.description,
-            inputSchema: item.inputSchema,
-          },
-        }),
-        {},
-      ),
+      tools: toolDefinitions,
     },
   },
 )
