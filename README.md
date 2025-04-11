@@ -28,6 +28,8 @@ pnpm run build
 
 ### Configuration
 
+#### AWS Credentials
+
 To use the MCP server, you need to configure it with your AWS credentials. You can do this by setting environment variables:
 
 ```json
@@ -46,21 +48,49 @@ To use the MCP server, you need to configure it with your AWS credentials. You c
 }
 ```
 
+#### Read-Only Mode
+
+You can configure the server to operate in read-only mode by setting the `READONLY` environment variable to `"true"`:
+
+```json
+{
+  "mcpServers": {
+    "amazon-cloudwatch-logs": {
+      "command": "node",
+      "args": ["/path/to/mcp-amazon-cloud-watch-logs/build/index.js"],
+      "env": {
+        "AWS_REGION": "us-east-1",
+        "AWS_ACCESS_KEY_ID": "<YOUR_ACCESS_KEY>",
+        "AWS_SECRET_ACCESS_KEY": "<YOUR_SECRET_KEY>",
+        "READONLY": "true"
+      }
+    }
+  }
+}
+```
+
+When read-only mode is enabled:
+
+- Only READ operations (tools that retrieve or query information) are available
+- WRITE operations (tools that create, modify, or delete resources) are disabled
+
+This is useful for scenarios where you want to allow log viewing but prevent any modifications to your CloudWatch Logs resources. By default, read-only mode is disabled (`READONLY` is set to `"false"`), allowing both read and write operations.
+
 > **Note:** In the future, this project will be published as an npm package and as a Docker image for easier installation and usage.
 
 ## Available Tools
 
-| Tool Name            | Description                                                                              |
-| -------------------- | ---------------------------------------------------------------------------------------- |
-| create_log_group     | Creates a new Amazon CloudWatch Logs log group                                           |
-| describe_log_groups  | List and describe Amazon CloudWatch Logs log groups                                      |
-| delete_log_group     | Delete an Amazon CloudWatch Logs log group                                               |
-| create_log_stream    | Create a new log stream in an Amazon CloudWatch Logs log group                           |
-| describe_log_streams | List and describe log streams in an Amazon CloudWatch Logs log group                     |
-| delete_log_stream    | Delete a log stream in an Amazon CloudWatch Logs log group                               |
-| put_log_events       | Write log events to a specified log stream in Amazon CloudWatch Logs                     |
-| get_log_events       | Retrieve log events from a specified log stream in Amazon CloudWatch Logs                |
-| filter_log_events    | Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs |
+| Tool Name            | Operation Type | Description                                                                              |
+| -------------------- | -------------- | ---------------------------------------------------------------------------------------- |
+| create_log_group     | WRITE          | Creates a new Amazon CloudWatch Logs log group                                           |
+| describe_log_groups  | READ           | List and describe Amazon CloudWatch Logs log groups                                      |
+| delete_log_group     | WRITE          | Delete an Amazon CloudWatch Logs log group                                               |
+| create_log_stream    | WRITE          | Create a new log stream in an Amazon CloudWatch Logs log group                           |
+| describe_log_streams | READ           | List and describe log streams in an Amazon CloudWatch Logs log group                     |
+| delete_log_stream    | WRITE          | Delete a log stream in an Amazon CloudWatch Logs log group                               |
+| put_log_events       | WRITE          | Write log events to a specified log stream in Amazon CloudWatch Logs                     |
+| get_log_events       | READ           | Retrieve log events from a specified log stream in Amazon CloudWatch Logs                |
+| filter_log_events    | READ           | Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs |
 
 For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs/blob/main/TOOLS.md).
 
@@ -193,6 +223,7 @@ The server is designed to be easily extensible. To add a new CloudWatch Logs ope
          inputSchema: zodToJsonSchema(myOperationSchema.MyOperationRequestSchema),
          requestSchema: myOperationSchema.MyOperationRequestSchema,
          operationFn: myOperation.myOperation,
+         operationType: Operation.READ,
        },
      }
      ```

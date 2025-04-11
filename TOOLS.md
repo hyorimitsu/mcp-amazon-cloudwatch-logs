@@ -6,7 +6,7 @@ This document provides detailed information about the tools available in the Ama
 
 ## Available Tools
 
-### create_log_group
+### create_log_group [WRITE]
 
 Creates a new Amazon CloudWatch Logs log group.
 
@@ -44,7 +44,7 @@ Response:
 }
 ```
 
-### describe_log_groups
+### describe_log_groups [READ]
 
 List and describe Amazon CloudWatch Logs log groups.
 
@@ -93,7 +93,7 @@ Response:
 }
 ```
 
-### delete_log_group
+### delete_log_group [WRITE]
 
 Delete an Amazon CloudWatch Logs log group.
 
@@ -124,7 +124,7 @@ Response:
 }
 ```
 
-### create_log_stream
+### create_log_stream [WRITE]
 
 Create a new log stream in an Amazon CloudWatch Logs log group.
 
@@ -157,7 +157,7 @@ Response:
 }
 ```
 
-### describe_log_streams
+### describe_log_streams [READ]
 
 List and describe log streams in an Amazon CloudWatch Logs log group.
 
@@ -209,7 +209,7 @@ Response:
 }
 ```
 
-### delete_log_stream
+### delete_log_stream [WRITE]
 
 Delete a log stream in an Amazon CloudWatch Logs log group.
 
@@ -242,7 +242,7 @@ Response:
 }
 ```
 
-### put_log_events
+### put_log_events [WRITE]
 
 Write log events to a specified log stream in Amazon CloudWatch Logs.
 
@@ -294,7 +294,7 @@ Response:
 }
 ```
 
-### get_log_events
+### get_log_events [READ]
 
 Retrieve log events from a specified log stream in Amazon CloudWatch Logs.
 
@@ -352,7 +352,7 @@ Response:
 }
 ```
 
-### filter_log_events
+### filter_log_events [READ]
 
 Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs.
 
