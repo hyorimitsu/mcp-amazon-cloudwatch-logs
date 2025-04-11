@@ -17,10 +17,22 @@ export const ToolName = {
   FilterLogEvents: 'filter_log_events',
 } as const
 
-type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
+export type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
 
 export const isToolName = (name: unknown): name is ToolNameType =>
   Object.values(ToolName).includes(name as ToolNameType)
+
+/**
+ * Object containing operation types for tools
+ *
+ * Used to indicate whether a tool is for reference (read-only) or for updating (write operations)
+ */
+export const Operation = {
+  READ: 'READ',
+  WRITE: 'WRITE',
+} as const
+
+export type OperationType = (typeof Operation)[keyof typeof Operation]
 
 // Tool definition structure for listing available tools
 export type ListToolDefinitionItem = {

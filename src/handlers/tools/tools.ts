@@ -1,4 +1,5 @@
 import { zodToJsonSchema } from 'zod-to-json-schema'
+import { config } from '../../config/index.ts'
 import * as events from '../../operations/events.ts'
 import * as groups from '../../operations/groups.ts'
 import * as eventsSchema from '../../operations/schemas/events.ts'
@@ -10,16 +11,22 @@ import {
   isToolName,
   type ListToolDefinition,
   type ListToolDefinitionItem,
+  Operation,
+  type OperationType,
   ToolName,
+  type ToolNameType,
 } from './types.ts'
 
-export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
+type AdditionalProperty = { [N in ToolNameType]: { operationType: OperationType } }
+
+export const toolDefinitions: ListToolDefinition & CallToolDefinition & AdditionalProperty = {
   [ToolName.CreateLogGroup]: {
     name: ToolName.CreateLogGroup,
     description: 'Create a new Amazon CloudWatch Logs log group',
     inputSchema: zodToJsonSchema(groupsSchema.CreateLogGroupRequestSchema),
     requestSchema: groupsSchema.CreateLogGroupRequestSchema,
     operationFn: groups.createLogGroup,
+    operationType: Operation.WRITE,
   },
   [ToolName.DescribeLogGroups]: {
     name: ToolName.DescribeLogGroups,
@@ -27,6 +34,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(groupsSchema.DescribeLogGroupsRequestSchema),
     requestSchema: groupsSchema.DescribeLogGroupsRequestSchema,
     operationFn: groups.describeLogGroups,
+    operationType: Operation.READ,
   },
   [ToolName.DeleteLogGroup]: {
     name: ToolName.DeleteLogGroup,
@@ -34,6 +42,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(groupsSchema.DeleteLogGroupRequestSchema),
     requestSchema: groupsSchema.DeleteLogGroupRequestSchema,
     operationFn: groups.deleteLogGroup,
+    operationType: Operation.WRITE,
   },
   [ToolName.CreateLogStream]: {
     name: ToolName.CreateLogStream,
@@ -41,6 +50,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(streamsSchema.CreateLogStreamRequestSchema),
     requestSchema: streamsSchema.CreateLogStreamRequestSchema,
     operationFn: streams.createLogStream,
+    operationType: Operation.WRITE,
   },
   [ToolName.DescribeLogStreams]: {
     name: ToolName.DescribeLogStreams,
@@ -48,6 +58,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(streamsSchema.DescribeLogStreamsRequestSchema),
     requestSchema: streamsSchema.DescribeLogStreamsRequestSchema,
     operationFn: streams.describeLogStreams,
+    operationType: Operation.READ,
   },
   [ToolName.DeleteLogStream]: {
     name: ToolName.DeleteLogStream,
@@ -55,6 +66,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(streamsSchema.DeleteLogStreamRequestSchema),
     requestSchema: streamsSchema.DeleteLogStreamRequestSchema,
     operationFn: streams.deleteLogStream,
+    operationType: Operation.WRITE,
   },
   [ToolName.PutLogEvents]: {
     name: ToolName.PutLogEvents,
@@ -62,6 +74,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(eventsSchema.PutLogEventsRequestSchema),
     requestSchema: eventsSchema.PutLogEventsRequestSchema,
     operationFn: events.putLogEvents,
+    operationType: Operation.WRITE,
   },
   [ToolName.GetLogEvents]: {
     name: ToolName.GetLogEvents,
@@ -69,6 +82,7 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(eventsSchema.GetLogEventsRequestSchema),
     requestSchema: eventsSchema.GetLogEventsRequestSchema,
     operationFn: events.getLogEvents,
+    operationType: Operation.READ,
   },
   [ToolName.FilterLogEvents]: {
     name: ToolName.FilterLogEvents,
@@ -77,19 +91,23 @@ export const toolDefinitions: ListToolDefinition & CallToolDefinition = {
     inputSchema: zodToJsonSchema(eventsSchema.FilterLogEventsRequestSchema),
     requestSchema: eventsSchema.FilterLogEventsRequestSchema,
     operationFn: events.filterLogEvents,
+    operationType: Operation.READ,
   },
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for listing)
-export const tools: ListToolDefinitionItem[] = Object.entries(toolDefinitions).map(([, value]) => ({
-  name: value.name,
-  description: value.description,
-  inputSchema: value.inputSchema,
-}))
+export const tools: ListToolDefinitionItem[] = Object.entries(toolDefinitions)
+  .filter(([, value]) => (config.readonly ? value.operationType !== Operation.WRITE : true))
+  .map(([, value]) => ({
+    name: value.name,
+    description: value.description,
+    inputSchema: value.inputSchema,
+  }))
 
 // Available tools for Amazon CloudWatch Logs operations (for execution)
-export const callTools = Object.entries(toolDefinitions).reduce<CallToolDefinition>(
-  (acc, [key, value]) => {
+export const callTools = Object.entries(toolDefinitions)
+  .filter(([, value]) => (config.readonly ? value.operationType !== Operation.WRITE : true))
+  .reduce<CallToolDefinition>((acc, [key, value]) => {
     if (isToolName(key)) {
       acc[key] = {
         requestSchema: value.requestSchema,
@@ -97,6 +115,4 @@ export const callTools = Object.entries(toolDefinitions).reduce<CallToolDefiniti
       }
     }
     return acc
-  },
-  {} as CallToolDefinition,
-)
+  }, {} as CallToolDefinition)
