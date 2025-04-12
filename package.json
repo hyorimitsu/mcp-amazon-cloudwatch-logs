@@ -21,7 +21,8 @@
     "showTsConfig": "tsc --showConfig",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write './**/*.{js,ts,json}'"
+    "format": "prettier --check './**/*.{js,ts,json}'",
+    "format:fix": "prettier --write './**/*.{js,ts,json}'"
   },
   "dependencies": {
     "@aws-sdk/client-cloudwatch-logs": "^3.782.0",

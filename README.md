@@ -3,6 +3,7 @@
 A Model Context Protocol (MCP) server that provides tools for interacting with Amazon CloudWatch Logs services. This server enables AI assistants to manage CloudWatch logs through a standardized interface using AWS SDK.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Style](https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs/actions/workflows/check-code-style.yaml/badge.svg)](https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs/actions/workflows/check-code-style.yaml)
 
 > **Note:** This project is currently under active development and not yet ready for production use. Features and APIs may change significantly before the first stable release.
 
@@ -141,8 +142,11 @@ pnpm run lint
 # Fix linting issues
 pnpm run lint:fix
 
-# Format code
+# Check formatting
 pnpm run format
+
+# Fix formatting issues
+pnpm run format:fix
 
 # Test with the MCP Inspector
 pnpm run inspector
