@@ -142,8 +142,11 @@ pnpm run lint
 # Fix linting issues
 pnpm run lint:fix
 
-# Format code
+# Check formatting
 pnpm run format
+
+# Fix formatting issues
+pnpm run format:fix
 
 # Test with the MCP Inspector
 pnpm run inspector

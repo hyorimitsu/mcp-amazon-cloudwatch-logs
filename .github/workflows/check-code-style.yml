@@ -39,7 +39,7 @@ jobs:
         run: pnpm run lint
 
       - name: Format check
-        run: pnpm run prettier --check './**/*.{js,ts,json}'
+        run: pnpm run format
 
       - name: Build check
         run: pnpm run build
