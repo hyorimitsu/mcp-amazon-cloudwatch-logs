@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+build
+
+# Version control
+.git
+.github
+.gitignore
+
+# Editor directories
+.devcontainer
+
+# Code style configurations
+.prettierrc
+eslint.config.js
+
+# Documents
+README.md
+TOOLS.md
+LICENSE
