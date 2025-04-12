@@ -16,8 +16,8 @@ This MCP server allows AI assistants to interact with Amazon CloudWatch Logs thr
 
 ```bash
 # Clone the repository
-git clone https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs.git
-cd mcp-amazon-cloud-watch-logs
+git clone https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs.git
+cd mcp-amazon-cloudwatch-logs
 
 # Install dependencies
 pnpm install
@@ -37,7 +37,7 @@ To use the MCP server, you need to configure it with your AWS credentials. You c
   "mcpServers": {
     "amazon-cloudwatch-logs": {
       "command": "node",
-      "args": ["/path/to/mcp-amazon-cloud-watch-logs/build/index.js"],
+      "args": ["/path/to/mcp-amazon-cloudwatch-logs/build/index.js"],
       "env": {
         "AWS_REGION": "us-east-1",
         "AWS_ACCESS_KEY_ID": "<YOUR_ACCESS_KEY>",
@@ -57,7 +57,7 @@ You can configure the server to operate in read-only mode by setting the `READON
   "mcpServers": {
     "amazon-cloudwatch-logs": {
       "command": "node",
-      "args": ["/path/to/mcp-amazon-cloud-watch-logs/build/index.js"],
+      "args": ["/path/to/mcp-amazon-cloudwatch-logs/build/index.js"],
       "env": {
         "AWS_REGION": "us-east-1",
         "AWS_ACCESS_KEY_ID": "<YOUR_ACCESS_KEY>",
@@ -92,7 +92,7 @@ This is useful for scenarios where you want to allow log viewing but prevent any
 | get_log_events       | READ           | Retrieve log events from a specified log stream in Amazon CloudWatch Logs                |
 | filter_log_events    | READ           | Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs |
 
-For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs/blob/main/TOOLS.md).
+For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs/blob/main/TOOLS.md).
 
 > **Note:** This project is under development. Additional CloudWatch Logs operations are planned for future releases.
 
@@ -111,8 +111,8 @@ This project uses [VS Code Dev Containers](https://code.visualstudio.com/docs/de
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/hyorimitsu/mcp-amazon-cloud-watch-logs.git
-   cd mcp-amazon-cloud-watch-logs
+   git clone https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs.git
+   cd mcp-amazon-cloudwatch-logs
    ```
 
 2. Open the project in VS Code:
