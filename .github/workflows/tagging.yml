@@ -1,0 +1,47 @@
+name: Push New Tag
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'package.json'
+
+jobs:
+  push-new-tag:
+    name: Push New Tag
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get previous package.json version
+        id: prev-version
+        run: |
+          PREV_VERSION=$(git show HEAD~1:package.json | grep '"version":' | sed -E 's/.*"version": "([^"]+)".*/\1/')
+          echo "version=$PREV_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get current package.json version
+        id: current-version
+        run: |
+          CURRENT_VERSION=$(grep '"version":' package.json | sed -E 's/.*"version": "([^"]+)".*/\1/')
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and push tag if version changed
+        if: steps.prev-version.outputs.version != steps.current-version.outputs.version
+        run: |
+          VERSION=${{ steps.current-version.outputs.version }}
+          echo "Version changed from ${{ steps.prev-version.outputs.version }} to $VERSION"
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git fetch --tags
+          git tag -a "v$VERSION" -m "Release v$VERSION"
+          git push origin "v$VERSION"
+
+          echo "Successfully created and pushed tag v$VERSION"
