@@ -1,0 +1,25 @@
+# Source code
+src/
+env/
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Version control
+.git/
+.github/
+.gitignore
+
+# Editor directories
+.devcontainer/
+
+# Development files
+.dockerignore
+.prettierrc
+Dockerfile
+eslint.config.js
+tsconfig.json
+
+# Documents
+TOOLS.md

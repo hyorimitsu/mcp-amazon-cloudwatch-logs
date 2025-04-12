@@ -13,7 +13,8 @@ build
 # Editor directories
 .devcontainer
 
-# Code style configurations
+# Development files
+.npmignore
 .prettierrc
 eslint.config.js
 

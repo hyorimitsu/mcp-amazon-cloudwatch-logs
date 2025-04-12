@@ -13,6 +13,9 @@
   "files": [
     "build"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc && shx chmod +x build/*.js",
     "prepare": "npm run build",
