@@ -1,6 +1,6 @@
 {
   "name": "@hyorimitsu/amazon-cloudwatch-logs-mcp-server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Model Context Protocol (MCP) server that provides tools for interacting with Amazon CloudWatch Logs services. This server enables AI Agent to manage CloudWatch log through a standardized interface using AWS SDK.",
   "license": "MIT",
   "author": "Hiroki Yorimitsu (https://github.com/hyorimitsu)",
@@ -13,6 +13,9 @@
   "files": [
     "build"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc && shx chmod +x build/*.js",
     "prepare": "npm run build",
@@ -47,6 +50,7 @@
     "eslint-plugin-unicorn": "^58.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.5.3",
+    "semver": "^7.7.1",
     "shx": "^0.4.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.29.0"
