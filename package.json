@@ -6,6 +6,10 @@
   "author": "Hiroki Yorimitsu (https://github.com/hyorimitsu)",
   "homepage": "https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs",
   "bugs": "https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs.git"
+  },
   "type": "module",
   "bin": {
     "amazon-cloudwatch-logs-mcp-server": "./build/index.js"
