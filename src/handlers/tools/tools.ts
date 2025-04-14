@@ -2,8 +2,10 @@ import { zodToJsonSchema } from 'zod-to-json-schema'
 import { config } from '../../config/index.ts'
 import * as events from '../../operations/events.ts'
 import * as groups from '../../operations/groups.ts'
+import * as insights from '../../operations/insights.ts'
 import * as eventsSchema from '../../operations/schemas/events.ts'
 import * as groupsSchema from '../../operations/schemas/groups.ts'
+import * as insightsSchema from '../../operations/schemas/insights.ts'
 import * as streamsSchema from '../../operations/schemas/streams.ts'
 import * as streams from '../../operations/streams.ts'
 import {
@@ -95,6 +97,14 @@ export const toolDefinition: ToolDefinition = {
     inputSchema: zodToJsonSchema(eventsSchema.FilterLogEventsRequestSchema),
     requestSchema: eventsSchema.FilterLogEventsRequestSchema,
     operationFn: events.filterLogEvents,
+    operationType: Operation.READ,
+  },
+  [ToolName.StartQuery]: {
+    name: ToolName.StartQuery,
+    description: 'Start a CloudWatch Logs Insights query',
+    inputSchema: zodToJsonSchema(insightsSchema.StartQueryRequestSchema),
+    requestSchema: insightsSchema.StartQueryRequestSchema,
+    operationFn: insights.startQuery,
     operationType: Operation.READ,
   },
 }
