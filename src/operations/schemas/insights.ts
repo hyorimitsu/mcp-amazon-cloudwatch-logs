@@ -2,6 +2,8 @@ import {
   QueryLanguage,
   type StartQueryCommandInput,
   type StartQueryCommandOutput,
+  type StopQueryCommandInput,
+  type StopQueryCommandOutput,
 } from '@aws-sdk/client-cloudwatch-logs'
 import { z } from 'zod'
 import { typeSafeSchema } from '../../lib/zod/helper.ts'
@@ -38,5 +40,23 @@ export const StartQueryResponseSchema = typeSafeSchema<
   z.object({
     $metadata: MetadataSchema,
     queryId: z.string().optional().describe('The unique ID of the query.'),
+  }),
+)
+
+export const StopQueryRequestSchema = typeSafeSchema<OptionalToUndefined<StopQueryCommandInput>>()(
+  z.object({
+    queryId: z.string().describe('The ID number of the query to stop.'),
+  }),
+)
+
+export const StopQueryResponseSchema = typeSafeSchema<
+  OptionalToUndefined<StopQueryCommandOutput>
+>()(
+  z.object({
+    $metadata: MetadataSchema,
+    success: z
+      .boolean()
+      .optional()
+      .describe('This is true if the query was stopped by the `StopQuery` operation.'),
   }),
 )
