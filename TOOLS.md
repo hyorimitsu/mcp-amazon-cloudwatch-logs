@@ -412,3 +412,192 @@ Response:
   "nextToken": "eyJsb2dTdHJlYW1OYW1lIjoiaW5zdGFuY2UtNTY3OCIsImV2ZW50SWQiOiI5ODc2NTQzMjEwOTg3NjU0MzIxMDk4NzY1NDMyMTA5ODc2NTQzMjEwOTg3NjU0MzIxMDk4NzY1NCJ9"
 }
 ```
+
+### start_query [READ]
+
+Start a CloudWatch Logs Insights query.
+
+**Parameters:**
+
+- `queryLanguage` (string, optional): Specify the query language to use for this query
+- `logGroupName` (string, optional): The log group on which to perform the query
+- `logGroupNames` (array of strings, optional): The list of log groups to be queried
+- `logGroupIdentifiers` (array of strings, optional): The list of log groups to query
+- `startTime` (number, required): The beginning of the time range to query
+- `endTime` (number, required): The end of the time range to query
+- `queryString` (string, required): The query string to use
+- `limit` (number, optional): The maximum number of log events to return in the query
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupNames": ["my-application-logs"],
+  "startTime": 1617234567,
+  "endTime": 1617320967,
+  "queryString": "fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111"
+}
+```
+
+### stop_query [READ]
+
+Stop a running CloudWatch Logs Insights query.
+
+**Parameters:**
+
+- `queryId` (string, required): The ID number of the query to stop
+
+**Example:**
+
+Request:
+
+```json
+{
+  "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "success": true
+}
+```
+
+### get_query_results [READ]
+
+Retrieve results from a CloudWatch Logs Insights query.
+
+**Parameters:**
+
+- `queryId` (string, required): The ID number of the query
+
+**Example:**
+
+Request:
+
+```json
+{
+  "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "queryLanguage": "CWLI",
+  "results": [
+    [
+      {
+        "field": "@timestamp",
+        "value": "2023-04-01 12:34:56.789"
+      },
+      {
+        "field": "@message",
+        "value": "ERROR: Database connection failed"
+      }
+    ],
+    [
+      {
+        "field": "@timestamp",
+        "value": "2023-04-01 12:30:45.678"
+      },
+      {
+        "field": "@message",
+        "value": "ERROR: Authentication failed for user 'admin'"
+      }
+    ]
+  ],
+  "statistics": {
+    "recordsMatched": 2,
+    "recordsScanned": 1000,
+    "estimatedRecordsSkipped": 0,
+    "bytesScanned": 123456,
+    "estimatedBytesSkipped": 0,
+    "logGroupsScanned": 1
+  },
+  "status": "Complete"
+}
+```
+
+### describe_queries [READ]
+
+List and describe CloudWatch Logs Insights queries.
+
+**Parameters:**
+
+- `logGroupName` (string, optional): Limits the returned queries to only those for the specified log group
+- `status` (string, optional): Limits the returned queries to only those that have the specified status
+- `maxResults` (number, optional): Limits the number of returned queries to the specified number
+- `nextToken` (string, optional): The token for the next set of items to return
+
+**Example:**
+
+Request:
+
+```json
+{
+  "status": "Running"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "queries": [
+    {
+      "queryLanguage": "CWLI",
+      "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111",
+      "queryString": "fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc",
+      "status": "Running",
+      "createTime": 1617234567000,
+      "logGroupName": "my-application-logs"
+    },
+    {
+      "queryLanguage": "CWLI",
+      "queryId": "22b22b22-2222-22b2-22b2-22b22b22b222",
+      "queryString": "fields @timestamp, @message | stats count() by bin(30s)",
+      "status": "Running",
+      "createTime": 1617234568000,
+      "logGroupName": "my-api-logs"
+    }
+  ]
+}
+```
