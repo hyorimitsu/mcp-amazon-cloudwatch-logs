@@ -1,5 +1,8 @@
 import {
+  type GetQueryResultsCommandInput,
+  type GetQueryResultsCommandOutput,
   QueryLanguage,
+  QueryStatus,
   type StartQueryCommandInput,
   type StartQueryCommandOutput,
   type StopQueryCommandInput,
@@ -58,5 +61,83 @@ export const StopQueryResponseSchema = typeSafeSchema<
       .boolean()
       .optional()
       .describe('This is true if the query was stopped by the `StopQuery` operation.'),
+  }),
+)
+
+export const GetQueryResultsRequestSchema = typeSafeSchema<
+  OptionalToUndefined<GetQueryResultsCommandInput>
+>()(
+  z.object({
+    queryId: z.string().describe('The ID number of the query.'),
+  }),
+)
+
+export const GetQueryResultsResponseSchema = typeSafeSchema<
+  OptionalToUndefined<GetQueryResultsCommandOutput>
+>()(
+  z.object({
+    $metadata: MetadataSchema,
+    queryLanguage: z
+      .nativeEnum(QueryLanguage)
+      .optional()
+      .describe('The query language used for this query.'),
+    results: z
+      .array(
+        z.array(
+          z.object({
+            field: z.string().optional().describe('The log event field.'),
+            value: z.string().optional().describe('The value of this field.'),
+          }),
+        ),
+      )
+      .optional()
+      .describe(
+        'The log events that matched the query criteria during the most recent time it ran.',
+      ),
+    statistics: z
+      .object({
+        recordsMatched: z
+          .number()
+          .optional()
+          .describe('The number of log events that matched the query string.'),
+        recordsScanned: z
+          .number()
+          .optional()
+          .describe('The total number of log events scanned during the query.'),
+        estimatedRecordsSkipped: z
+          .number()
+          .optional()
+          .describe(
+            'An estimate of the number of log events that were skipped when processing this query, because the query contained an indexed field.',
+          ),
+        bytesScanned: z
+          .number()
+          .optional()
+          .describe('The total number of bytes in the log events scanned during the query.'),
+        estimatedBytesSkipped: z
+          .number()
+          .optional()
+          .describe(
+            'An estimate of the number of bytes in the log events that were skipped when processing this query, because the query contained an indexed field.',
+          ),
+        logGroupsScanned: z
+          .number()
+          .optional()
+          .describe('The number of log groups that were scanned by this query.'),
+      })
+      .optional()
+      .describe(
+        'Includes the number of log events scanned by the query, the number of log events that matched the query criteria, and the total number of bytes in the scanned log events.',
+      ),
+    status: z
+      .nativeEnum(QueryStatus)
+      .optional()
+      .describe('The status of the most recent running of the query.'),
+    encryptionKey: z
+      .string()
+      .optional()
+      .describe(
+        "If you associated an KMS key with the CloudWatch Logs Insights query results in this account, this field displays the ARN of the key that's used to encrypt the query results when `StartQuery` stores them.",
+      ),
   }),
 )

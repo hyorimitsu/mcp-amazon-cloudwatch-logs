@@ -1,7 +1,13 @@
-import { StartQueryCommand, StopQueryCommand } from '@aws-sdk/client-cloudwatch-logs'
+import {
+  GetQueryResultsCommand,
+  StartQueryCommand,
+  StopQueryCommand,
+} from '@aws-sdk/client-cloudwatch-logs'
 import { type z } from 'zod'
 import { client } from '../lib/aws/client.ts'
 import {
+  GetQueryResultsRequestSchema,
+  GetQueryResultsResponseSchema,
   StartQueryRequestSchema,
   StartQueryResponseSchema,
   StopQueryRequestSchema,
@@ -28,4 +34,15 @@ export const stopQuery = async (
   const output = await client.send(command)
 
   return StopQueryResponseSchema.parse(output)
+}
+
+export const getQueryResults = async (
+  params: z.infer<typeof GetQueryResultsRequestSchema>,
+): Promise<z.infer<typeof GetQueryResultsResponseSchema>> => {
+  const input = GetQueryResultsRequestSchema.parse(params)
+
+  const command = new GetQueryResultsCommand(input)
+  const output = await client.send(command)
+
+  return GetQueryResultsResponseSchema.parse(output)
 }

@@ -135,6 +135,14 @@ export const toolDefinition: ToolDefinition = {
     operationFn: insights.stopQuery,
     operationType: Operation.READ, // Classified as READ for usability
   },
+  [ToolName.GetQueryResults]: {
+    name: ToolName.GetQueryResults,
+    description: 'Retrieve the results of a CloudWatch Logs Insights query',
+    inputSchema: zodToJsonSchema(insightsSchema.GetQueryResultsRequestSchema),
+    requestSchema: insightsSchema.GetQueryResultsRequestSchema,
+    operationFn: insights.getQueryResults,
+    operationType: Operation.READ,
+  },
 }
 
 // Available tools for Amazon CloudWatch Logs operations (for listing)
