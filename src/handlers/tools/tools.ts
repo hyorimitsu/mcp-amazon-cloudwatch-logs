@@ -26,9 +26,7 @@ type ToolDefinition =
   { [N in ToolNameType]: { operationType: OperationType } }
 
 export const toolDefinition: ToolDefinition = {
-  /**
-   * Log group operations
-   */
+  // Log group operations
   [ToolName.CreateLogGroup]: {
     name: ToolName.CreateLogGroup,
     description: 'Create a new Amazon CloudWatch Logs log group',
@@ -53,9 +51,7 @@ export const toolDefinition: ToolDefinition = {
     operationFn: groups.deleteLogGroup,
     operationType: Operation.WRITE,
   },
-  /**
-   * Log stream operations
-   */
+  // Log stream operations
   [ToolName.CreateLogStream]: {
     name: ToolName.CreateLogStream,
     description: 'Create a new log stream in an Amazon CloudWatch Logs log group',
@@ -80,9 +76,7 @@ export const toolDefinition: ToolDefinition = {
     operationFn: streams.deleteLogStream,
     operationType: Operation.WRITE,
   },
-  /**
-   * Log events operations
-   */
+  // Log events operations
   [ToolName.PutLogEvents]: {
     name: ToolName.PutLogEvents,
     description: 'Write log events to a specified log stream in Amazon CloudWatch Logs',
@@ -108,24 +102,14 @@ export const toolDefinition: ToolDefinition = {
     operationFn: events.filterLogEvents,
     operationType: Operation.READ,
   },
-  /**
-   * Insights query operations
-   *
-   * Both `start_query` and `stop_query` are classified as READ:
-   * - Improved usability: Read-only users can execute and manage queries
-   * - Consistency: Query initiation and termination at the same access level
-   * - Analysis workflow: Provides complete analysis capabilities in read-only mode
-   *
-   * TODO: Consider implementing a DISABLE_TOOLS environment variable
-   * to disable the insights category when strict resource control is needed
-   */
+  // Insights query operations
   [ToolName.StartQuery]: {
     name: ToolName.StartQuery,
     description: 'Start a CloudWatch Logs Insights query',
     inputSchema: zodToJsonSchema(insightsSchema.StartQueryRequestSchema),
     requestSchema: insightsSchema.StartQueryRequestSchema,
     operationFn: insights.startQuery,
-    operationType: Operation.READ, // Classified as READ for usability
+    operationType: Operation.READ,
   },
   [ToolName.StopQuery]: {
     name: ToolName.StopQuery,
@@ -133,7 +117,7 @@ export const toolDefinition: ToolDefinition = {
     inputSchema: zodToJsonSchema(insightsSchema.StopQueryRequestSchema),
     requestSchema: insightsSchema.StopQueryRequestSchema,
     operationFn: insights.stopQuery,
-    operationType: Operation.READ, // Classified as READ for usability
+    operationType: Operation.READ,
   },
   [ToolName.GetQueryResults]: {
     name: ToolName.GetQueryResults,
