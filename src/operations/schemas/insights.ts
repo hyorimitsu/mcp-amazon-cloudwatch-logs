@@ -1,4 +1,6 @@
 import {
+  type DescribeQueriesCommandInput,
+  type DescribeQueriesCommandOutput,
   type GetQueryResultsCommandInput,
   type GetQueryResultsCommandOutput,
   QueryLanguage,
@@ -139,5 +141,62 @@ export const GetQueryResultsResponseSchema = typeSafeSchema<
       .describe(
         "If you associated an KMS key with the CloudWatch Logs Insights query results in this account, this field displays the ARN of the key that's used to encrypt the query results when `StartQuery` stores them.",
       ),
+  }),
+)
+
+export const DescribeQueriesRequestSchema = typeSafeSchema<
+  OptionalToUndefined<DescribeQueriesCommandInput>
+>()(
+  z.object({
+    logGroupName: z
+      .string()
+      .optional()
+      .describe('Limits the returned queries to only those for the specified log group.'),
+    status: z
+      .nativeEnum(QueryStatus)
+      .optional()
+      .describe('Limits the returned queries to only those that have the specified status.'),
+    maxResults: z
+      .number()
+      .optional()
+      .describe('Limits the number of returned queries to the specified number.'),
+    nextToken: z.string().optional().describe('The token for the next set of items to return.'),
+    queryLanguage: z
+      .nativeEnum(QueryLanguage)
+      .optional()
+      .describe(
+        'Limits the returned queries to only the queries that use the specified query language.',
+      ),
+  }),
+)
+
+export const DescribeQueriesResponseSchema = typeSafeSchema<
+  OptionalToUndefined<DescribeQueriesCommandOutput>
+>()(
+  z.object({
+    $metadata: MetadataSchema,
+    queries: z
+      .array(
+        z.object({
+          queryLanguage: z
+            .nativeEnum(QueryLanguage)
+            .optional()
+            .describe('The query language used for this query.'),
+          queryId: z.string().optional().describe('The unique ID number of this query.'),
+          queryString: z.string().optional().describe('The query string used in this query.'),
+          status: z.nativeEnum(QueryStatus).optional().describe('The status of this query.'),
+          createTime: z
+            .number()
+            .optional()
+            .describe('The date and time that this query was created.'),
+          logGroupName: z
+            .string()
+            .optional()
+            .describe('The name of the log group scanned by this query.'),
+        }),
+      )
+      .optional()
+      .describe('The list of queries that match the request.'),
+    nextToken: z.string().optional().describe('The token for the next set of items to return.'),
   }),
 )

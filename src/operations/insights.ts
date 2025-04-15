@@ -1,4 +1,5 @@
 import {
+  DescribeQueriesCommand,
   GetQueryResultsCommand,
   StartQueryCommand,
   StopQueryCommand,
@@ -6,6 +7,8 @@ import {
 import { type z } from 'zod'
 import { client } from '../lib/aws/client.ts'
 import {
+  DescribeQueriesRequestSchema,
+  DescribeQueriesResponseSchema,
   GetQueryResultsRequestSchema,
   GetQueryResultsResponseSchema,
   StartQueryRequestSchema,
@@ -45,4 +48,15 @@ export const getQueryResults = async (
   const output = await client.send(command)
 
   return GetQueryResultsResponseSchema.parse(output)
+}
+
+export const describeQueries = async (
+  params: z.infer<typeof DescribeQueriesRequestSchema>,
+): Promise<z.infer<typeof DescribeQueriesResponseSchema>> => {
+  const input = DescribeQueriesRequestSchema.parse(params)
+
+  const command = new DescribeQueriesCommand(input)
+  const output = await client.send(command)
+
+  return DescribeQueriesResponseSchema.parse(output)
 }

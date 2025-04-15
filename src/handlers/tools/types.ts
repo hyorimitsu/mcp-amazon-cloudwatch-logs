@@ -18,6 +18,7 @@ export const ToolName = {
   StartQuery: 'start_query',
   StopQuery: 'stop_query',
   GetQueryResults: 'get_query_results',
+  DescribeQueries: 'describe_queries',
 } as const
 
 export type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
