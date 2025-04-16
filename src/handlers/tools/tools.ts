@@ -2,8 +2,10 @@ import { zodToJsonSchema } from 'zod-to-json-schema'
 import { config } from '../../config/index.ts'
 import * as events from '../../operations/events.ts'
 import * as groups from '../../operations/groups.ts'
+import * as insights from '../../operations/insights.ts'
 import * as eventsSchema from '../../operations/schemas/events.ts'
 import * as groupsSchema from '../../operations/schemas/groups.ts'
+import * as insightsSchema from '../../operations/schemas/insights.ts'
 import * as streamsSchema from '../../operations/schemas/streams.ts'
 import * as streams from '../../operations/streams.ts'
 import {
@@ -24,6 +26,7 @@ type ToolDefinition =
   { [N in ToolNameType]: { operationType: OperationType } }
 
 export const toolDefinition: ToolDefinition = {
+  // Log group operations
   [ToolName.CreateLogGroup]: {
     name: ToolName.CreateLogGroup,
     description: 'Create a new Amazon CloudWatch Logs log group',
@@ -48,6 +51,7 @@ export const toolDefinition: ToolDefinition = {
     operationFn: groups.deleteLogGroup,
     operationType: Operation.WRITE,
   },
+  // Log stream operations
   [ToolName.CreateLogStream]: {
     name: ToolName.CreateLogStream,
     description: 'Create a new log stream in an Amazon CloudWatch Logs log group',
@@ -72,6 +76,7 @@ export const toolDefinition: ToolDefinition = {
     operationFn: streams.deleteLogStream,
     operationType: Operation.WRITE,
   },
+  // Log events operations
   [ToolName.PutLogEvents]: {
     name: ToolName.PutLogEvents,
     description: 'Write log events to a specified log stream in Amazon CloudWatch Logs',
@@ -95,6 +100,39 @@ export const toolDefinition: ToolDefinition = {
     inputSchema: zodToJsonSchema(eventsSchema.FilterLogEventsRequestSchema),
     requestSchema: eventsSchema.FilterLogEventsRequestSchema,
     operationFn: events.filterLogEvents,
+    operationType: Operation.READ,
+  },
+  // Insights query operations
+  [ToolName.StartQuery]: {
+    name: ToolName.StartQuery,
+    description: 'Start a CloudWatch Logs Insights query',
+    inputSchema: zodToJsonSchema(insightsSchema.StartQueryRequestSchema),
+    requestSchema: insightsSchema.StartQueryRequestSchema,
+    operationFn: insights.startQuery,
+    operationType: Operation.READ,
+  },
+  [ToolName.StopQuery]: {
+    name: ToolName.StopQuery,
+    description: 'Stop a running CloudWatch Logs Insights query',
+    inputSchema: zodToJsonSchema(insightsSchema.StopQueryRequestSchema),
+    requestSchema: insightsSchema.StopQueryRequestSchema,
+    operationFn: insights.stopQuery,
+    operationType: Operation.READ,
+  },
+  [ToolName.GetQueryResults]: {
+    name: ToolName.GetQueryResults,
+    description: 'Retrieve the results of a CloudWatch Logs Insights query',
+    inputSchema: zodToJsonSchema(insightsSchema.GetQueryResultsRequestSchema),
+    requestSchema: insightsSchema.GetQueryResultsRequestSchema,
+    operationFn: insights.getQueryResults,
+    operationType: Operation.READ,
+  },
+  [ToolName.DescribeQueries]: {
+    name: ToolName.DescribeQueries,
+    description: 'List and describe CloudWatch Logs Insights queries',
+    inputSchema: zodToJsonSchema(insightsSchema.DescribeQueriesRequestSchema),
+    requestSchema: insightsSchema.DescribeQueriesRequestSchema,
+    operationFn: insights.describeQueries,
     operationType: Operation.READ,
   },
 }

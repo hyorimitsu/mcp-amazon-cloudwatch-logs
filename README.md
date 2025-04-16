@@ -185,9 +185,16 @@ This is useful for scenarios where you want to allow log viewing but prevent any
 | get_log_events    | READ           | Retrieve log events from a specified log stream    |
 | filter_log_events | READ           | Search log events with a pattern across log groups |
 
-For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs/blob/main/TOOLS.md).
+### Insights Operations
 
-> **Note:** This project is under development. Additional CloudWatch Logs operations are planned for future releases.
+| Tool Name         | Operation Type | Description                                            |
+| ----------------- | -------------- | ------------------------------------------------------ |
+| start_query       | READ           | Start a CloudWatch Logs Insights query                 |
+| stop_query        | READ           | Stop a running CloudWatch Logs Insights query          |
+| get_query_results | READ           | Retrieve results from a CloudWatch Logs Insights query |
+| describe_queries  | READ           | List and describe CloudWatch Logs Insights queries     |
+
+For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs/blob/main/TOOLS.md).
 
 ## Development
 

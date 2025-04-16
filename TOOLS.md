@@ -4,9 +4,40 @@ This document provides detailed information about the tools available in the Ama
 
 > **Note:** This project is currently under active development. The available tools and their interfaces may change before the first stable release.
 
+## Table of Contents
+
+### Log Group Operations
+
+- [create_log_group](#create_log_group-write) - Create a new log group
+- [describe_log_groups](#describe_log_groups-read) - List and describe log groups
+- [delete_log_group](#delete_log_group-write) - Delete a log group
+
+### Log Stream Operations
+
+- [create_log_stream](#create_log_stream-write) - Create a new log stream
+- [describe_log_streams](#describe_log_streams-read) - List and describe log streams
+- [delete_log_stream](#delete_log_stream-write) - Delete a log stream
+
+### Log Events Operations
+
+- [put_log_events](#put_log_events-write) - Write log events to a stream
+- [get_log_events](#get_log_events-read) - Retrieve log events from a stream
+- [filter_log_events](#filter_log_events-read) - Search log events with a pattern
+
+### Insights Operations
+
+- [start_query](#start_query-read) - Start an insights query
+- [stop_query](#stop_query-read) - Stop a running insights query
+- [get_query_results](#get_query_results-read) - Retrieve query results
+- [describe_queries](#describe_queries-read) - List and describe queries
+
 ## Available Tools
 
-### create_log_group [WRITE]
+### Log Group Operations
+
+Log Group Operations allow you to create, manage, and delete log groups in CloudWatch Logs. Log groups are containers for log streams that share the same retention, monitoring, and access control settings.
+
+#### create_log_group [WRITE]
 
 Creates a new Amazon CloudWatch Logs log group.
 
@@ -44,7 +75,7 @@ Response:
 }
 ```
 
-### describe_log_groups [READ]
+#### describe_log_groups [READ]
 
 List and describe Amazon CloudWatch Logs log groups.
 
@@ -93,7 +124,7 @@ Response:
 }
 ```
 
-### delete_log_group [WRITE]
+#### delete_log_group [WRITE]
 
 Delete an Amazon CloudWatch Logs log group.
 
@@ -124,7 +155,11 @@ Response:
 }
 ```
 
-### create_log_stream [WRITE]
+### Log Stream Operations
+
+Log Stream Operations allow you to create, manage, and delete log streams within log groups. Log streams represent different sources of logs in the same log group, such as application instances or components.
+
+#### create_log_stream [WRITE]
 
 Create a new log stream in an Amazon CloudWatch Logs log group.
 
@@ -157,7 +192,7 @@ Response:
 }
 ```
 
-### describe_log_streams [READ]
+#### describe_log_streams [READ]
 
 List and describe log streams in an Amazon CloudWatch Logs log group.
 
@@ -209,7 +244,7 @@ Response:
 }
 ```
 
-### delete_log_stream [WRITE]
+#### delete_log_stream [WRITE]
 
 Delete a log stream in an Amazon CloudWatch Logs log group.
 
@@ -242,7 +277,11 @@ Response:
 }
 ```
 
-### put_log_events [WRITE]
+### Log Events Operations
+
+Log Events Operations allow you to write, retrieve, and search log events within log streams. Log events are the actual log records containing timestamps and message data.
+
+#### put_log_events [WRITE]
 
 Write log events to a specified log stream in Amazon CloudWatch Logs.
 
@@ -294,7 +333,7 @@ Response:
 }
 ```
 
-### get_log_events [READ]
+#### get_log_events [READ]
 
 Retrieve log events from a specified log stream in Amazon CloudWatch Logs.
 
@@ -352,7 +391,7 @@ Response:
 }
 ```
 
-### filter_log_events [READ]
+#### filter_log_events [READ]
 
 Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs.
 
@@ -410,5 +449,198 @@ Response:
     }
   ],
   "nextToken": "eyJsb2dTdHJlYW1OYW1lIjoiaW5zdGFuY2UtNTY3OCIsImV2ZW50SWQiOiI5ODc2NTQzMjEwOTg3NjU0MzIxMDk4NzY1NDMyMTA5ODc2NTQzMjEwOTg3NjU0MzIxMDk4NzY1NCJ9"
+}
+```
+
+### Insights Operations
+
+Insights Operations allow you to perform advanced queries and analysis on your log data using CloudWatch Logs Insights. These operations help you efficiently search and analyze log data to identify patterns and troubleshoot issues.
+
+#### start_query [READ]
+
+Start a CloudWatch Logs Insights query.
+
+**Parameters:**
+
+- `queryLanguage` (string, optional): Specify the query language to use for this query
+- `logGroupName` (string, optional): The log group on which to perform the query
+- `logGroupNames` (array of strings, optional): The list of log groups to be queried
+- `logGroupIdentifiers` (array of strings, optional): The list of log groups to query
+- `startTime` (number, required): The beginning of the time range to query
+- `endTime` (number, required): The end of the time range to query
+- `queryString` (string, required): The query string to use
+- `limit` (number, optional): The maximum number of log events to return in the query
+
+**Example:**
+
+Request:
+
+```json
+{
+  "logGroupNames": ["my-application-logs"],
+  "startTime": 1617234567,
+  "endTime": 1617320967,
+  "queryString": "fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111"
+}
+```
+
+#### stop_query [READ]
+
+Stop a running CloudWatch Logs Insights query.
+
+**Parameters:**
+
+- `queryId` (string, required): The ID number of the query to stop
+
+**Example:**
+
+Request:
+
+```json
+{
+  "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "success": true
+}
+```
+
+#### get_query_results [READ]
+
+Retrieve results from a CloudWatch Logs Insights query.
+
+**Parameters:**
+
+- `queryId` (string, required): The ID number of the query
+
+**Example:**
+
+Request:
+
+```json
+{
+  "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "queryLanguage": "CWLI",
+  "results": [
+    [
+      {
+        "field": "@timestamp",
+        "value": "2023-04-01 12:34:56.789"
+      },
+      {
+        "field": "@message",
+        "value": "ERROR: Database connection failed"
+      }
+    ],
+    [
+      {
+        "field": "@timestamp",
+        "value": "2023-04-01 12:30:45.678"
+      },
+      {
+        "field": "@message",
+        "value": "ERROR: Authentication failed for user 'admin'"
+      }
+    ]
+  ],
+  "statistics": {
+    "recordsMatched": 2,
+    "recordsScanned": 1000,
+    "estimatedRecordsSkipped": 0,
+    "bytesScanned": 123456,
+    "estimatedBytesSkipped": 0,
+    "logGroupsScanned": 1
+  },
+  "status": "Complete"
+}
+```
+
+#### describe_queries [READ]
+
+List and describe CloudWatch Logs Insights queries.
+
+**Parameters:**
+
+- `logGroupName` (string, optional): Limits the returned queries to only those for the specified log group
+- `status` (string, optional): Limits the returned queries to only those that have the specified status
+- `maxResults` (number, optional): Limits the number of returned queries to the specified number
+- `nextToken` (string, optional): The token for the next set of items to return
+
+**Example:**
+
+Request:
+
+```json
+{
+  "status": "Running"
+}
+```
+
+Response:
+
+```json
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "example-request-id",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "queries": [
+    {
+      "queryLanguage": "CWLI",
+      "queryId": "11a11a11-1111-11a1-11a1-11a11a11a111",
+      "queryString": "fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc",
+      "status": "Running",
+      "createTime": 1617234567000,
+      "logGroupName": "my-application-logs"
+    },
+    {
+      "queryLanguage": "CWLI",
+      "queryId": "22b22b22-2222-22b2-22b2-22b22b22b222",
+      "queryString": "fields @timestamp, @message | stats count() by bin(30s)",
+      "status": "Running",
+      "createTime": 1617234568000,
+      "logGroupName": "my-api-logs"
+    }
+  ]
 }
 ```

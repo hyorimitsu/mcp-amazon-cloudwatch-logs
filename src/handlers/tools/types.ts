@@ -15,6 +15,10 @@ export const ToolName = {
   PutLogEvents: 'put_log_events',
   GetLogEvents: 'get_log_events',
   FilterLogEvents: 'filter_log_events',
+  StartQuery: 'start_query',
+  StopQuery: 'stop_query',
+  GetQueryResults: 'get_query_results',
+  DescribeQueries: 'describe_queries',
 } as const
 
 export type ToolNameType = (typeof ToolName)[keyof typeof ToolName]
