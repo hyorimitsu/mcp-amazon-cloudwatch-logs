@@ -12,6 +12,8 @@
   },
   "keywords": [
     "mcp",
+    "mcp-server",
+    "cloudwatch",
     "cloudwatch-logs"
   ],
   "type": "module",
