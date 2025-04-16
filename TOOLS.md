@@ -4,9 +4,40 @@ This document provides detailed information about the tools available in the Ama
 
 > **Note:** This project is currently under active development. The available tools and their interfaces may change before the first stable release.
 
+## Table of Contents
+
+### Log Group Operations
+
+- [create_log_group](#create_log_group-write) - Create a new log group
+- [describe_log_groups](#describe_log_groups-read) - List and describe log groups
+- [delete_log_group](#delete_log_group-write) - Delete a log group
+
+### Log Stream Operations
+
+- [create_log_stream](#create_log_stream-write) - Create a new log stream
+- [describe_log_streams](#describe_log_streams-read) - List and describe log streams
+- [delete_log_stream](#delete_log_stream-write) - Delete a log stream
+
+### Log Events Operations
+
+- [put_log_events](#put_log_events-write) - Write log events to a stream
+- [get_log_events](#get_log_events-read) - Retrieve log events from a stream
+- [filter_log_events](#filter_log_events-read) - Search log events with a pattern
+
+### Insights Operations
+
+- [start_query](#start_query-read) - Start a insights query
+- [stop_query](#stop_query-read) - Stop a running insights query
+- [get_query_results](#get_query_results-read) - Retrieve query results
+- [describe_queries](#describe_queries-read) - List and describe queries
+
 ## Available Tools
 
-### create_log_group [WRITE]
+### Log Group Operations
+
+Log Group Operations allow you to create, manage, and delete log groups in CloudWatch Logs. Log groups are containers for log streams that share the same retention, monitoring, and access control settings.
+
+#### create_log_group [WRITE]
 
 Creates a new Amazon CloudWatch Logs log group.
 
@@ -44,7 +75,7 @@ Response:
 }
 ```
 
-### describe_log_groups [READ]
+#### describe_log_groups [READ]
 
 List and describe Amazon CloudWatch Logs log groups.
 
@@ -93,7 +124,7 @@ Response:
 }
 ```
 
-### delete_log_group [WRITE]
+#### delete_log_group [WRITE]
 
 Delete an Amazon CloudWatch Logs log group.
 
@@ -124,7 +155,11 @@ Response:
 }
 ```
 
-### create_log_stream [WRITE]
+### Log Stream Operations
+
+Log Stream Operations allow you to create, manage, and delete log streams within log groups. Log streams represent different sources of logs in the same log group, such as application instances or components.
+
+#### create_log_stream [WRITE]
 
 Create a new log stream in an Amazon CloudWatch Logs log group.
 
@@ -157,7 +192,7 @@ Response:
 }
 ```
 
-### describe_log_streams [READ]
+#### describe_log_streams [READ]
 
 List and describe log streams in an Amazon CloudWatch Logs log group.
 
@@ -209,7 +244,7 @@ Response:
 }
 ```
 
-### delete_log_stream [WRITE]
+#### delete_log_stream [WRITE]
 
 Delete a log stream in an Amazon CloudWatch Logs log group.
 
@@ -242,7 +277,11 @@ Response:
 }
 ```
 
-### put_log_events [WRITE]
+### Log Events Operations
+
+Log Events Operations allow you to write, retrieve, and search log events within log streams. Log events are the actual log records containing timestamps and message data.
+
+#### put_log_events [WRITE]
 
 Write log events to a specified log stream in Amazon CloudWatch Logs.
 
@@ -294,7 +333,7 @@ Response:
 }
 ```
 
-### get_log_events [READ]
+#### get_log_events [READ]
 
 Retrieve log events from a specified log stream in Amazon CloudWatch Logs.
 
@@ -352,7 +391,7 @@ Response:
 }
 ```
 
-### filter_log_events [READ]
+#### filter_log_events [READ]
 
 Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs.
 
@@ -413,7 +452,11 @@ Response:
 }
 ```
 
-### start_query [READ]
+### Insights Operations
+
+Insights Operations allow you to perform advanced queries and analysis on your log data using CloudWatch Logs Insights. These operations help you efficiently search and analyze log data to identify patterns and troubleshoot issues.
+
+#### start_query [READ]
 
 Start a CloudWatch Logs Insights query.
 
@@ -455,7 +498,7 @@ Response:
 }
 ```
 
-### stop_query [READ]
+#### stop_query [READ]
 
 Stop a running CloudWatch Logs Insights query.
 
@@ -487,7 +530,7 @@ Response:
 }
 ```
 
-### get_query_results [READ]
+#### get_query_results [READ]
 
 Retrieve results from a CloudWatch Logs Insights query.
 
@@ -550,7 +593,7 @@ Response:
 }
 ```
 
-### describe_queries [READ]
+#### describe_queries [READ]
 
 List and describe CloudWatch Logs Insights queries.
 
