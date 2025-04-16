@@ -26,7 +26,7 @@ This document provides detailed information about the tools available in the Ama
 
 ### Insights Operations
 
-- [start_query](#start_query-read) - Start a insights query
+- [start_query](#start_query-read) - Start an insights query
 - [stop_query](#stop_query-read) - Stop a running insights query
 - [get_query_results](#get_query_results-read) - Retrieve query results
 - [describe_queries](#describe_queries-read) - List and describe queries
