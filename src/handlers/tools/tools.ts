@@ -29,7 +29,8 @@ export const toolDefinition: ToolDefinition = {
   // Log group operations
   [ToolName.CreateLogGroup]: {
     name: ToolName.CreateLogGroup,
-    description: 'Create a new Amazon CloudWatch Logs log group',
+    description:
+      'Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.',
     inputSchema: zodToJsonSchema(groupsSchema.CreateLogGroupRequestSchema),
     requestSchema: groupsSchema.CreateLogGroupRequestSchema,
     operationFn: groups.createLogGroup,
@@ -37,7 +38,8 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.DescribeLogGroups]: {
     name: ToolName.DescribeLogGroups,
-    description: 'List and describe Amazon CloudWatch Logs log groups',
+    description:
+      'Lists the specified log groups. You can list all your log groups or filter the results by prefix. The results are ASCII-sorted by log group name.',
     inputSchema: zodToJsonSchema(groupsSchema.DescribeLogGroupsRequestSchema),
     requestSchema: groupsSchema.DescribeLogGroupsRequestSchema,
     operationFn: groups.describeLogGroups,
@@ -45,7 +47,8 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.DeleteLogGroup]: {
     name: ToolName.DeleteLogGroup,
-    description: 'Delete an Amazon CloudWatch Logs log group',
+    description:
+      'Deletes the specified log group and permanently deletes all the archived log events associated with the log group.',
     inputSchema: zodToJsonSchema(groupsSchema.DeleteLogGroupRequestSchema),
     requestSchema: groupsSchema.DeleteLogGroupRequestSchema,
     operationFn: groups.deleteLogGroup,
@@ -54,7 +57,8 @@ export const toolDefinition: ToolDefinition = {
   // Log stream operations
   [ToolName.CreateLogStream]: {
     name: ToolName.CreateLogStream,
-    description: 'Create a new log stream in an Amazon CloudWatch Logs log group',
+    description:
+      'Creates a log stream for the specified log group. A log stream is a sequence of log events that originate from a single source, such as an application instance or a resource that is being monitored.',
     inputSchema: zodToJsonSchema(streamsSchema.CreateLogStreamRequestSchema),
     requestSchema: streamsSchema.CreateLogStreamRequestSchema,
     operationFn: streams.createLogStream,
@@ -62,7 +66,8 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.DescribeLogStreams]: {
     name: ToolName.DescribeLogStreams,
-    description: 'List and describe log streams in an Amazon CloudWatch Logs log group',
+    description:
+      'Lists the log streams for the specified log group. You can list all the log streams or filter the results by prefix. You can also control how the results are ordered.',
     inputSchema: zodToJsonSchema(streamsSchema.DescribeLogStreamsRequestSchema),
     requestSchema: streamsSchema.DescribeLogStreamsRequestSchema,
     operationFn: streams.describeLogStreams,
@@ -70,7 +75,8 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.DeleteLogStream]: {
     name: ToolName.DeleteLogStream,
-    description: 'Delete a log stream in an Amazon CloudWatch Logs log group',
+    description:
+      'Deletes the specified log stream and permanently deletes all the archived log events associated with the log stream.',
     inputSchema: zodToJsonSchema(streamsSchema.DeleteLogStreamRequestSchema),
     requestSchema: streamsSchema.DeleteLogStreamRequestSchema,
     operationFn: streams.deleteLogStream,
@@ -79,7 +85,7 @@ export const toolDefinition: ToolDefinition = {
   // Log events operations
   [ToolName.PutLogEvents]: {
     name: ToolName.PutLogEvents,
-    description: 'Write log events to a specified log stream in Amazon CloudWatch Logs',
+    description: 'Uploads a batch of log events to the specified log stream.',
     inputSchema: zodToJsonSchema(eventsSchema.PutLogEventsRequestSchema),
     requestSchema: eventsSchema.PutLogEventsRequestSchema,
     operationFn: events.putLogEvents,
@@ -87,7 +93,8 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.GetLogEvents]: {
     name: ToolName.GetLogEvents,
-    description: 'Retrieve log events from a specified log stream in Amazon CloudWatch Logs',
+    description:
+      'Lists log events from the specified log stream. You can list all of the log events or filter using a time range.',
     inputSchema: zodToJsonSchema(eventsSchema.GetLogEventsRequestSchema),
     requestSchema: eventsSchema.GetLogEventsRequestSchema,
     operationFn: events.getLogEvents,
@@ -96,7 +103,7 @@ export const toolDefinition: ToolDefinition = {
   [ToolName.FilterLogEvents]: {
     name: ToolName.FilterLogEvents,
     description:
-      'Search log events with a pattern across log groups and streams in Amazon CloudWatch Logs',
+      'Lists log events from the specified log group. You can list all log events, or filter the results by one or more of the following: a filter pattern, a time range, or the log stream name (or a log stream name prefix that matches multiple log streams).',
     inputSchema: zodToJsonSchema(eventsSchema.FilterLogEventsRequestSchema),
     requestSchema: eventsSchema.FilterLogEventsRequestSchema,
     operationFn: events.filterLogEvents,
@@ -105,7 +112,8 @@ export const toolDefinition: ToolDefinition = {
   // Insights query operations
   [ToolName.StartQuery]: {
     name: ToolName.StartQuery,
-    description: 'Start a CloudWatch Logs Insights query',
+    description:
+      'Starts a query of one or more log groups using CloudWatch Logs Insights. You specify the log groups and time range to query and the query string to use.',
     inputSchema: zodToJsonSchema(insightsSchema.StartQueryRequestSchema),
     requestSchema: insightsSchema.StartQueryRequestSchema,
     operationFn: insights.startQuery,
@@ -113,7 +121,8 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.StopQuery]: {
     name: ToolName.StopQuery,
-    description: 'Stop a running CloudWatch Logs Insights query',
+    description:
+      'Stops a CloudWatch Logs Insights query that is in progress. If the query has already ended, the operation returns an error indicating that the specified query is not running.',
     inputSchema: zodToJsonSchema(insightsSchema.StopQueryRequestSchema),
     requestSchema: insightsSchema.StopQueryRequestSchema,
     operationFn: insights.stopQuery,
@@ -121,7 +130,7 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.GetQueryResults]: {
     name: ToolName.GetQueryResults,
-    description: 'Retrieve the results of a CloudWatch Logs Insights query',
+    description: 'Returns the results from the specified query.',
     inputSchema: zodToJsonSchema(insightsSchema.GetQueryResultsRequestSchema),
     requestSchema: insightsSchema.GetQueryResultsRequestSchema,
     operationFn: insights.getQueryResults,
@@ -129,7 +138,8 @@ export const toolDefinition: ToolDefinition = {
   },
   [ToolName.DescribeQueries]: {
     name: ToolName.DescribeQueries,
-    description: 'List and describe CloudWatch Logs Insights queries',
+    description:
+      'Returns a list of CloudWatch Logs Insights queries that are scheduled, running, or have been run recently in this account. You can request all queries or limit it to queries of a specific log group or queries with a certain status.',
     inputSchema: zodToJsonSchema(insightsSchema.DescribeQueriesRequestSchema),
     requestSchema: insightsSchema.DescribeQueriesRequestSchema,
     operationFn: insights.describeQueries,
