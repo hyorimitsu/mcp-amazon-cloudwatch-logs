@@ -163,36 +163,36 @@ This is useful for scenarios where you want to allow log viewing but prevent any
 
 ### Log Group Operations
 
-| Tool Name           | Operation Type | Description                                         |
-| ------------------- | -------------- | --------------------------------------------------- |
-| create_log_group    | WRITE          | Creates a new Amazon CloudWatch Logs log group      |
-| describe_log_groups | READ           | List and describe Amazon CloudWatch Logs log groups |
-| delete_log_group    | WRITE          | Delete an Amazon CloudWatch Logs log group          |
+| Tool Name           | Operation Type | Description                                                                                                                                       |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| create_log_group    | WRITE          | Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.                                    |
+| describe_log_groups | READ           | Lists the specified log groups. You can list all your log groups or filter the results by prefix. The results are ASCII-sorted by log group name. |
+| delete_log_group    | WRITE          | Deletes the specified log group and permanently deletes all the archived log events associated with the log group.                                |
 
 ### Log Stream Operations
 
-| Tool Name            | Operation Type | Description                                  |
-| -------------------- | -------------- | -------------------------------------------- |
-| create_log_stream    | WRITE          | Create a new log stream in a log group       |
-| describe_log_streams | READ           | List and describe log streams in a log group |
-| delete_log_stream    | WRITE          | Delete a log stream in a log group           |
+| Tool Name            | Operation Type | Description                                                                                                                                                                                            |
+| -------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| create_log_stream    | WRITE          | Creates a log stream for the specified log group. A log stream is a sequence of log events that originate from a single source, such as an application instance or a resource that is being monitored. |
+| describe_log_streams | READ           | Lists the log streams for the specified log group. You can list all the log streams or filter the results by prefix. You can also control how the results are ordered.                                 |
+| delete_log_stream    | WRITE          | Deletes the specified log stream and permanently deletes all the archived log events associated with the log stream.                                                                                   |
 
 ### Log Event Operations
 
-| Tool Name         | Operation Type | Description                                        |
-| ----------------- | -------------- | -------------------------------------------------- |
-| put_log_events    | WRITE          | Write log events to a specified log stream         |
-| get_log_events    | READ           | Retrieve log events from a specified log stream    |
-| filter_log_events | READ           | Search log events with a pattern across log groups |
+| Tool Name         | Operation Type | Description                                                                                                                                                                                                                                                |
+| ----------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| put_log_events    | WRITE          | Uploads a batch of log events to the specified log stream.                                                                                                                                                                                                 |
+| get_log_events    | READ           | Lists log events from the specified log stream. You can list all of the log events or filter using a time range.                                                                                                                                           |
+| filter_log_events | READ           | Lists log events from the specified log group. You can list all log events, or filter the results by one or more of the following: a filter pattern, a time range, or the log stream name (or a log stream name prefix that matches multiple log streams). |
 
 ### Insights Operations
 
-| Tool Name         | Operation Type | Description                                            |
-| ----------------- | -------------- | ------------------------------------------------------ |
-| start_query       | READ           | Start a CloudWatch Logs Insights query                 |
-| stop_query        | READ           | Stop a running CloudWatch Logs Insights query          |
-| get_query_results | READ           | Retrieve results from a CloudWatch Logs Insights query |
-| describe_queries  | READ           | List and describe CloudWatch Logs Insights queries     |
+| Tool Name         | Operation Type | Description                                                                                                                                                                                                                             |
+| ----------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| start_query       | READ           | Starts a query of one or more log groups using CloudWatch Logs Insights. You specify the log groups and time range to query and the query string to use.                                                                                |
+| stop_query        | READ           | Stops a CloudWatch Logs Insights query that is in progress. If the query has already ended, the operation returns an error indicating that the specified query is not running.                                                          |
+| get_query_results | READ           | Returns the results from the specified query.                                                                                                                                                                                           |
+| describe_queries  | READ           | Returns a list of CloudWatch Logs Insights queries that are scheduled, running, or have been run recently in this account. You can request all queries or limit it to queries of a specific log group or queries with a certain status. |
 
 For detailed documentation on each tool, including parameters and examples, see [TOOLS.md](https://github.com/hyorimitsu/mcp-amazon-cloudwatch-logs/blob/main/TOOLS.md).
 
