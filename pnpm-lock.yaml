@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@aws-sdk/client-cloudwatch-logs':
-        specifier: ^3.782.0
+        specifier: ^3.787.0
         version: 3.787.0
       '@modelcontextprotocol/sdk':
         specifier: ^1.8.0
@@ -18,7 +18,7 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       zod:
-        specifier: ^3.24.2
+        specifier: ^3.24.3
         version: 3.24.3
       zod-to-json-schema:
         specifier: ^3.24.5
@@ -40,22 +40,22 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       '@types/node':
-        specifier: ^22.14.0
+        specifier: ^22.14.1
         version: 22.14.1
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.29.0
+        specifier: ^8.30.1
         version: 8.30.1(@typescript-eslint/parser@8.30.1(eslint@9.24.0)(typescript@5.8.3))(eslint@9.24.0)(typescript@5.8.3)
       '@typescript-eslint/parser':
-        specifier: ^8.29.0
+        specifier: ^8.30.1
         version: 8.30.1(eslint@9.24.0)(typescript@5.8.3)
       eslint:
         specifier: ^9.24.0
         version: 9.24.0
       eslint-config-prettier:
-        specifier: ^10.1.1
+        specifier: ^10.1.2
         version: 10.1.2(eslint@9.24.0)
       eslint-import-resolver-typescript:
-        specifier: ^4.3.1
+        specifier: ^4.3.3
         version: 4.3.3(eslint-plugin-import@2.31.0)(eslint@9.24.0)
       eslint-plugin-import:
         specifier: ^2.31.0
@@ -79,7 +79,7 @@ importers:
         specifier: ~5.8.3
         version: 5.8.3
       typescript-eslint:
-        specifier: ^8.29.0
+        specifier: ^8.30.1
         version: 8.30.1(eslint@9.24.0)(typescript@5.8.3)
 
 packages:
